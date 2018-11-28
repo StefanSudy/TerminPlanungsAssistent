@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TPAWebApi", "TPAWebApi\TPAW
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{8402AD18-5E2B-4B8B-9B30-D9693FC0D3BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "Libs\BusinessLogic\BusinessLogic.csproj", "{B596E115-4B2D-40AF-B8D8-0B312B3EED87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "Libs\BusinessLogic\BusinessLogic.csproj", "{B596E115-4B2D-40AF-B8D8-0B312B3EED87}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MariaDBAccess", "Libs\MariaDBAccess\MariaDBAccess.csproj", "{BCAA4A14-E6E4-4BC6-874C-512A3E280127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{B596E115-4B2D-40AF-B8D8-0B312B3EED87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B596E115-4B2D-40AF-B8D8-0B312B3EED87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B596E115-4B2D-40AF-B8D8-0B312B3EED87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCAA4A14-E6E4-4BC6-874C-512A3E280127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCAA4A14-E6E4-4BC6-874C-512A3E280127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCAA4A14-E6E4-4BC6-874C-512A3E280127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCAA4A14-E6E4-4BC6-874C-512A3E280127}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B596E115-4B2D-40AF-B8D8-0B312B3EED87} = {8402AD18-5E2B-4B8B-9B30-D9693FC0D3BC}
+		{BCAA4A14-E6E4-4BC6-874C-512A3E280127} = {8402AD18-5E2B-4B8B-9B30-D9693FC0D3BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {62E4078F-05D3-4B90-B3D4-2D53F045BFAE}
