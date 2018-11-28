@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLogic.Dependencies;
+using BusinessLogic.ServiceAPI;
+using MariaDBAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,17 +15,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using TPAWebApi.Dependencies;
 
 namespace TPAWebApi
 {
     public class Startup
     {
+        public static IDependencyRegistry DependencyRegistry { get; private set; }
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,7 +39,22 @@ namespace TPAWebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info {Title = "Termin Planungs Assistent", Version = "v1"});
+                c.DescribeAllEnumsAsStrings();
             });
+            services.AddDbContext<TpaContext>();
+
+            AutoMapper.Configure();
+
+            DependencyRegistry = new AspDotNetCoreServiceRegistry(services);
+
+            //new BusinessLogic.ServiceRegistration().RegisterServices(DependencyRegistry);
+            DependencyRegistry.RegisterType<IConfigProvider, AspDotNetCoreConfigProvider>();
+            var dependencyResolver = new AspDotNetCoreDependencyResolver();
+            DependencyRegistry.RegisterInstance<IDependencyResolver>(dependencyResolver);
+            dependencyResolver.SetServiceProvider(services.BuildServiceProvider(validateScopes: true));
+
+
+            new MariaDBAccess.ServiceRegistration(dependencyResolver.Resolve<IConfigProvider>()).RegisterServices(DependencyRegistry);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

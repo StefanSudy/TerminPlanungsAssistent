@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Libs\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\Libs\MariaDBAccess\MariaDBAccess.csproj" />
   </ItemGroup>
 
 </Project>
