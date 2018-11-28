@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAPI\" />
-    <Folder Include="Models\" />
     <Folder Include="Dependencies\" />
     <Folder Include="ServiceAPI\" />
   </ItemGroup>

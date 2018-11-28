@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TPAWebApi.ModelDto
+namespace TPAWebApi.ModelsDto
 {
-    public class AppointmentDto : IBaseModel
+    public class AppointmentDto
     {
         [Required]
         public string EntryName { get; set; }
