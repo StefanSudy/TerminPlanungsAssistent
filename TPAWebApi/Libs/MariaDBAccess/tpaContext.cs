@@ -51,7 +51,7 @@ namespace MariaDBAccess
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User", "tpa");
+                entity.ToTable("_user", "tpa");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("UserID")
