@@ -10,8 +10,9 @@ namespace BusinessLogic.DataAPI
     {
         void Add(TModel model);
         void Delete(TModel model);
-        void DeleteById(long id);
-        TModel Get(long id);
+        void DeleteById(int id);
+        TModel Get(int id);
+        void UpdateById(int id, TModel model);
         IEnumerable<TModel> Find(Expression<Func<TModel, bool>> predicate);
     }
 }

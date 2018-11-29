@@ -29,18 +29,26 @@ namespace MariaDBAccess
             _context.Appointment.Remove(model);
         }
 
-        public void DeleteById(long id)
+        public void DeleteById(int id)
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var appointment = Get(id);
             _context.Appointment.Remove(appointment);
         }
 
-        public Appointment Get(long id)
+        public Appointment Get(int id)
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var appointment = _context.Appointment.First(x => x.Id == id) ?? throw new ArgumentNullException(nameof(id));
             return appointment;
+        }
+
+        public void UpdateById(int id, Appointment appointment)
+        {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+            var _appointment = Get(id);
+            _appointment = appointment ?? throw new ArgumentNullException(nameof(appointment));
+            _context.Appointment.Update(_appointment);
         }
 
         public IEnumerable<Appointment> Find(Expression<Func<Appointment, bool>> predicate)

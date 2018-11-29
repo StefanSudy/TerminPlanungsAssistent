@@ -2,54 +2,58 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BusinessLogic.DataAPI;
 using BusinessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TPAWebApi.ModelsDto;
 
 namespace TPAWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         // GET: api/Users/5
-        [Produces(typeof(User))]
+        [Produces(typeof(UserDto))]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             if (id <= 0) return BadRequest(nameof(id));
             var user = _unitOfWork.Users.Get(id);
-            _unitOfWork.Save();
-            return Ok(user);
+            var _user = _mapper.Map<User, UserDto>(user);
+            return Ok(_user);
         }
 
         // POST: api/Users
         [HttpPost]
-        public IActionResult Post(User user)
+        public IActionResult Post(UserDto user)
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
-            _unitOfWork.Users.Add(user);
+            var _user = _mapper.Map<UserDto, User>(user);
+            _unitOfWork.Users.Add(_user);
             _unitOfWork.Save();
             return Ok(user);
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, User user)
+        public IActionResult Put(int id, UserDto user)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var _user = _unitOfWork.Users.Get(id);
-            _user = user;
+            _user = _mapper.Map<UserDto, User>(user);
             _unitOfWork.Save();
-            return Ok(_user);
+            return Ok(user);
         }
 
         // DELETE: api/ApiWithActions/5
