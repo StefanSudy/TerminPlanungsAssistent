@@ -26,7 +26,7 @@ namespace MariaDBAccess
         {
             modelBuilder.Entity<Appointment>(entity =>
             {
-                entity.ToTable("Appointment", "tpa");
+                entity.ToTable("AppointmentEntry", "tpa");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")

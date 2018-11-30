@@ -19,7 +19,6 @@ namespace TPAWebApi.ModelsDto
         public bool Status { get; set; }
         [Required]
         public int UserId { get; set; }
-        [Required]
         public int Id { get; set; }
     }
 }

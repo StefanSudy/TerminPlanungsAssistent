@@ -34,7 +34,7 @@ namespace TPAWebApi.Controllers
         }*/
 
         [Produces(typeof(AppointmentDto[]))]
-        [HttpGet("{id}")]
+        [HttpGet("{userId}")]
         public IActionResult GetAppointments(int userId)
         {
             if (userId <= 0) return BadRequest(nameof(userId));
@@ -64,6 +64,7 @@ namespace TPAWebApi.Controllers
             if (id <= 0) BadRequest(nameof(id));
             var _appointment = _mapper.Map<AppointmentDto, Appointment>(appointment);
             _unitOfWork.Appointments.UpdateById(id, _appointment);
+            _unitOfWork.Save();
             appointment = _mapper.Map<Appointment, AppointmentDto>(_appointment);
             return Ok(appointment);
         }
@@ -74,6 +75,7 @@ namespace TPAWebApi.Controllers
         {
             if (id <= 0) return BadRequest(nameof(id));
             _unitOfWork.Appointments.DeleteById(id);
+            _unitOfWork.Save();
             return Ok();
         }
     }
