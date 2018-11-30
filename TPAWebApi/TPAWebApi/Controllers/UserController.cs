@@ -54,7 +54,8 @@ namespace TPAWebApi.Controllers
             var _user = _mapper.Map<UserDto, User>(user);
             _unitOfWork.Users.UpdateById(id, _user);
             _unitOfWork.Save();
-            return Ok(_user);
+            user = _mapper.Map<User, UserDto>(_user);
+            return Ok(user);
         }
 
         // DELETE: api/ApiWithActions/5

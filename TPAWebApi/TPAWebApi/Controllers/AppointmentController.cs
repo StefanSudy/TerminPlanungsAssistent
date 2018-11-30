@@ -43,7 +43,6 @@ namespace TPAWebApi.Controllers
                                    .Find(x => x.UserId == userId)
                                ?? throw new ArgumentNullException(nameof(userId));
             return Ok(appointments.ToArray());
-
         }
 
         // POST api/values
@@ -54,6 +53,7 @@ namespace TPAWebApi.Controllers
             var _appointment = _mapper.Map<AppointmentDto, Appointment>(appointment);
             _unitOfWork.Appointments.Add(_appointment);
             _unitOfWork.Save();
+            appointment = _mapper.Map<Appointment, AppointmentDto>(_appointment);
             return Ok(appointment);
         }
 
@@ -64,6 +64,7 @@ namespace TPAWebApi.Controllers
             if (id <= 0) BadRequest(nameof(id));
             var _appointment = _mapper.Map<AppointmentDto, Appointment>(appointment);
             _unitOfWork.Appointments.UpdateById(id, _appointment);
+            appointment = _mapper.Map<Appointment, AppointmentDto>(_appointment);
             return Ok(appointment);
         }
 
