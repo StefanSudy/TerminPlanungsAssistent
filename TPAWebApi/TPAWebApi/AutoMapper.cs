@@ -14,12 +14,8 @@ namespace TPAWebApi
         {
             Mapper.Initialize(
                 cfg => cfg
-                    .CreateMap<AppointmentDto, Appointment>()
-                );
-            Mapper.Initialize(
-                cfg => cfg
-                    .CreateMap<UserDto, User>()
-                );
+                    .CreateMap<UserDto, User>().ForMember(x => x.Id, opt => opt.Ignore())
+            );
         }
     }
 }

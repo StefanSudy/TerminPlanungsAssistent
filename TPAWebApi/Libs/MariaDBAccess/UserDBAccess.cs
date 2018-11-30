@@ -45,10 +45,10 @@ namespace MariaDBAccess
 
         public void UpdateById(int id, User user)
         {
+            if (user == null) throw new ArgumentNullException(nameof(user));
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
-            var _user = Get(id);
-            _user = user ?? throw new ArgumentNullException(nameof(user));
-            _context.User.Update(_user);
+            user.Id = id;
+            _context.User.Update(user);
         }
 
         public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)

@@ -45,9 +45,10 @@ namespace MariaDBAccess
 
         public void UpdateById(int id, Appointment model)
         {
-            var appointment = Get(id);
-            appointment = model ?? throw new ArgumentNullException(nameof(model));
-            _context.Appointment.Update(appointment);
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+            model.Id = id;
+            _context.Appointment.Update(model);
         }
 
         public IEnumerable<Appointment> Find(Expression<Func<Appointment, bool>> predicate)

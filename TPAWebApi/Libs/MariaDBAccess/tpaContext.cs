@@ -31,7 +31,7 @@ namespace MariaDBAccess
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.EntryName)
                     .IsRequired()
@@ -51,12 +51,12 @@ namespace MariaDBAccess
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("_user", "tpa");
+                entity.ToTable("User", "tpa");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("UserID")
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Active).HasColumnType("tinyint(1)");
 
