@@ -42,6 +42,7 @@ namespace TPAWebApi.Controllers
             var _user = _mapper.Map<UserDto, User>(user);
             _unitOfWork.Users.Add(_user);
             _unitOfWork.Save();
+            user = _mapper.Map<User, UserDto>(_user);
             return Ok(user);
         }
 
@@ -50,10 +51,10 @@ namespace TPAWebApi.Controllers
         public IActionResult Put(int id, UserDto user)
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
-            var _user = _unitOfWork.Users.Get(id);
-            _user = _mapper.Map<UserDto, User>(user);
+            var _user = _mapper.Map<UserDto, User>(user);
+            _unitOfWork.Users.UpdateById(id, _user);
             _unitOfWork.Save();
-            return Ok(user);
+            return Ok(_user);
         }
 
         // DELETE: api/ApiWithActions/5
