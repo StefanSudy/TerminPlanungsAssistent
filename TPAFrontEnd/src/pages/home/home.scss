@@ -5,9 +5,13 @@ button.menuButton{
 h3{
     font-style: bold;
     font-size: 20px;
-    color: whitesmoke;
+    color: white;
 }
 
 ion-card{
     border-top: 5px solid #ff0020;
+}
+
+ion-card-header.card-header-md{
+    color: white;
 }
