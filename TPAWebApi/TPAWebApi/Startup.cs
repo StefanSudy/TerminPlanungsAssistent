@@ -8,6 +8,8 @@ using BusinessLogic.ServiceAPI;
 using MariaDBAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -53,6 +55,13 @@ namespace TPAWebApi
             DependencyRegistry.RegisterInstance<IDependencyResolver>(dependencyResolver);
             dependencyResolver.SetServiceProvider(services.BuildServiceProvider(validateScopes: true));
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
+
+
 
             new MariaDBAccess.ServiceRegistration(dependencyResolver.Resolve<IConfigProvider>()).RegisterServices(DependencyRegistry);
         }
@@ -69,6 +78,11 @@ namespace TPAWebApi
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

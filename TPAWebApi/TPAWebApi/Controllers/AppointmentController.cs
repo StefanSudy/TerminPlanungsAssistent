@@ -23,6 +23,7 @@ namespace TPAWebApi.Controllers
             _mapper = mapper;
         }
 
+        //ToDO: Evaluate if GetAppointmentById is required
         // GET api/values/5
         /*[Produces(typeof(Appointment))]
         [HttpGet("{id}")]

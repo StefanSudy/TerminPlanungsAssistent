@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MariaDBAccess
 {
-    public partial class TpaContext : DbContext
+    public class TpaContext : DbContext
     {
         private readonly string _connectionString;
         public TpaContext(string connectionString)
