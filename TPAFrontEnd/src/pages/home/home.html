@@ -11,10 +11,10 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-          <button ion-button block class="menuButton"><h3>Checkliste</h3></button>
+          <button ion-button block class="menuButton" (click)="goToChecklist()"><h3>Checkliste</h3></button>
       </ion-col>
       <ion-col>
-          <button ion-button block class="menuButton"><h3>Kalender</h3></button>
+          <button ion-button block class="menuButton" (click)="goToCalendar()"><h3>Kalender</h3></button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -23,11 +23,10 @@
       Ausstehendes
     </ion-card-header>
     <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-            <ion-icon [name]="item.icon" item-start></ion-icon>
-            {{item.title}}
+        <button ion-item *ngFor="let appointment of appointments" (click)="itemTapped($event, item)">
+            {{appointment.entryName}}
             <div class="item-note" item-end>
-              {{item.note}}
+              {{appointment.entryText}}
             </div>
           </button>
     </ion-list>

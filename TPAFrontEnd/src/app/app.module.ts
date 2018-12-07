@@ -10,10 +10,8 @@ import { CalendarPage } from '../pages/calendar/calendar';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AppointmentProvider } from '../providers/appointment/appointment';
+import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-
-
 
 @NgModule({
   declarations: [
@@ -24,9 +22,9 @@ import { HttpClientModule } from '@angular/common/http';
     CalendarPage
   ],
   imports: [
-    BrowserModule,,
+    BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -40,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AppointmentProvider
+    APIService
+  
   ]
 })
 export class AppModule {}

@@ -1,34 +1,33 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ListPage } from '../list/list';
+import { CalendarPage } from '../calendar/calendar';
+import { APIService } from '../../providers/apiservice/apiservice';
+import { Appointment } from '../../models/appointment';
+//import { User } from '../../models/user';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  private appointments : Appointment[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
+    this.appointments = [];
+    this.restProvider.getAppointmentsForUser(2).subscribe((appointments : Appointment[])=>{
+      this.appointments = appointments;
+    })
   }
 
   itemTapped(event, item) {
     //ToDo: Add Function to directly link to item
+  }
+  goToChecklist()
+  {
+    this.navCtrl.push(ListPage);
+  }
+  goToCalendar(){
+    this.navCtrl.push(CalendarPage);
   }
 }
