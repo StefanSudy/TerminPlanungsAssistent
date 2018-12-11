@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogic.DataAPI;
 using BusinessLogic.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TPAWebApi.ModelsDto;
 
 namespace TPAWebApi.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

@@ -47,6 +47,8 @@ namespace TPAWebApi
 
             AutoMapper.Configure();
 
+            services.AddCors();
+
             DependencyRegistry = new AspDotNetCoreServiceRegistry(services);
 
             //new BusinessLogic.ServiceRegistration().RegisterServices(DependencyRegistry);
@@ -77,6 +79,7 @@ namespace TPAWebApi
             {
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -89,6 +92,11 @@ namespace TPAWebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Termin Planungs Assistent V1");
             });
+
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
             app.UseMvc();
         }
