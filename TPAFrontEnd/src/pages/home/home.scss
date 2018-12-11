@@ -1,5 +1,6 @@
 button.menuButton{
-    height: 200px !important;
+    height: 150px !important;
+    font-size: 20px;
 }
 
 h3{
@@ -9,9 +10,12 @@ h3{
 }
 
 ion-card{
-    border-top: 5px solid #ff0020;
+    border-top: 5px solid map-get($colors, primary);
 }
 
 ion-card-header.card-header-md{
+    color: white;
+}
+ion-card-header.card-header-ios{
     color: white;
 }

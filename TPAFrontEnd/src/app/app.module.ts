@@ -4,9 +4,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { ChecklistPage } from '../pages/checklist/checklist';
 import { SettingsPage } from '../pages/settings/settings';
 import { CalendarPage } from '../pages/calendar/calendar';
+import { ViewItemPage } from '../pages/view-item/view-item';
+import { EditItemPage } from '../pages/edit-item/edit-item';
+import { NewItemPage } from '../pages/new-item/new-item';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,9 +20,12 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
+    ChecklistPage,
     SettingsPage,
-    CalendarPage
+    CalendarPage,
+    ViewItemPage,
+    EditItemPage,
+    NewItemPage
   ],
   imports: [
     BrowserModule,
@@ -30,9 +36,12 @@ import { HttpClientModule } from '@angular/common/http';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
+    ChecklistPage,
     SettingsPage,
-    CalendarPage
+    CalendarPage,
+    ViewItemPage,
+    EditItemPage,
+    NewItemPage
   ],
   providers: [
     StatusBar,

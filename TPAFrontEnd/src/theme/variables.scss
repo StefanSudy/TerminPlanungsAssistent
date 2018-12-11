@@ -71,6 +71,13 @@ $colors: (
 // default are overridden.
 
 @import "ionic.theme.dark";
+$text-input-highlight-color-valid: map-get($colors, primary);
+.item-md.item-block .item-inner {
+  border-bottom: 1px solid map-get($colors, primary)
+}
+.item-ios.item-block .item-inner {
+  border-bottom: 1px solid map-get($colors, primary)
+}
 
 
 // Ionicons

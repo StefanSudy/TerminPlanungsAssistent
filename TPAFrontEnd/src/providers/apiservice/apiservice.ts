@@ -17,19 +17,19 @@ export class APIService {
       return appointments.map((appointment) => new Appointment(appointment));
     });
   }
-  public PostAppointment(userId: number, appointment: Appointment): Observable<Appointment> {
+  public PostAppointment(appointment: Appointment): Observable<Appointment> {
     return this.httpClient.post(this.baseUrl + '/appointments/', appointment)
     .map(response => { 
       return new Appointment(response)
     });
   }
   public PutAppointment(id: number, appointment: Appointment): Observable<Appointment> {
-    return this.httpClient.put(this.baseUrl + '/appointments/', appointment)
+    return this.httpClient.put(this.baseUrl + '/appointments/' + id, appointment)
     .map((response) => {
       return new Appointment(response)
     });
   }
   public DeleteAppointment(id: number) {
-    return this.httpClient.delete(this.baseUrl + '/appointments' + id);
+    return this.httpClient.delete(this.baseUrl + '/appointments/' + id);
   }
 }

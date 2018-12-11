@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { ChecklistPage } from '../pages/checklist/checklist';
 import { SettingsPage } from '../pages/settings/settings';
 import { CalendarPage } from '../pages/calendar/calendar';
 
@@ -16,17 +16,17 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Hauptmenü', component: HomePage },
-      { title: 'Checkliste', component: ListPage },
-      { title: 'Einstellungen', component: SettingsPage },
-      { title: 'Kalender', component: CalendarPage}
+      { title: 'Hauptmenü', component: HomePage, icon: 'home'},
+      { title: 'Checkliste', component: ChecklistPage, icon: 'checkbox-outline'},
+      { title: 'Kalender', component: CalendarPage, icon: 'calendar'},
+      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'}
     ];
 
   }
