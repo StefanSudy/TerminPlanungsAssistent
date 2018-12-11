@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-//import { User } from '../../models/user';
 import { Appointment } from '../../models/appointment';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class APIService {
@@ -12,25 +11,25 @@ export class APIService {
 
   constructor(private httpClient : HttpClient) { }
 
-  public getAppointmentsForUser(userId: number): Observable<Appointment[]> {
-    return this.httpClient
-      .get(this.baseUrl + '/appointments/' + userId)
-      .map((appointments: Appointment[]) => {
-        return appointments.map((appointment) => new Appointment(appointment));
-      });
-      // .catch((err: any)=>{
-      //   return Observable.throw(err.statusText);
-      // });
+  public GetAppointmentsForUser(userId: number): Observable<Appointment[]> {
+    return this.httpClient.get(this.baseUrl + '/appointments/' + userId)
+    .map((appointments: Appointment[]) => {
+      return appointments.map((appointment) => new Appointment(appointment));
+    });
   }
-
-  // public getUser(userId: number): Observable<User> {
-  //   return this.httpClient
-  //     .get(this.baseUrl + '/user/' + userId)
-  //     .map(response => {
-  //       return new User(response);
-  //     })
-  //     .catch((err)=>{
-  //         console.error(err);
-  //     });
-  // }
+  public PostAppointment(userId: number, appointment: Appointment): Observable<Appointment> {
+    return this.httpClient.post(this.baseUrl + '/appointments/', appointment)
+    .map(response => { 
+      return new Appointment(response)
+    });
+  }
+  public PutAppointment(id: number, appointment: Appointment): Observable<Appointment> {
+    return this.httpClient.put(this.baseUrl + '/appointments/', appointment)
+    .map((response) => {
+      return new Appointment(response)
+    });
+  }
+  public DeleteAppointment(id: number) {
+    return this.httpClient.delete(this.baseUrl + '/appointments' + id);
+  }
 }

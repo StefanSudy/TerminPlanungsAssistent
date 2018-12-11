@@ -23,10 +23,10 @@
       Ausstehendes
     </ion-card-header>
     <ion-list>
-        <button ion-item *ngFor="let appointment of appointments" (click)="itemTapped($event, item)">
-            {{appointment.entryName}}
+        <button ion-item *ngFor="let item of currentItems" (click)="itemTapped($event, item)">
+            {{item.entryName}}
             <div class="item-note" item-end>
-              {{appointment.entryText}}
+              {{item.entryText}}
             </div>
           </button>
     </ion-list>

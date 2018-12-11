@@ -11,13 +11,12 @@ import { Appointment } from '../../models/appointment';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  private appointments : Appointment[];
+  public currentItems: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
-    this.appointments = [];
-    this.restProvider.getAppointmentsForUser(2).subscribe((appointments : Appointment[])=>{
-      this.appointments = appointments;
-    })
+    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+      this.currentItems = currentItems;
+    });
   }
 
   itemTapped(event, item) {
