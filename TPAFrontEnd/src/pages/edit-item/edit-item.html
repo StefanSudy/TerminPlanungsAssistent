@@ -3,15 +3,16 @@
     <ion-title>{{currentItem.entryName}}</ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content padding>
   <form (ngSubmit)="saveForm(currentItem)">
     <ion-item>
       <ion-label stacked>Name *</ion-label>
-      <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName"></ion-input>
+      <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName" maxLength="30"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Beschreibung</ion-label>
-      <ion-textarea [(ngModel)]="currentItem.entryText" name="entryText" maxLength="256" rows="7"></ion-textarea>
+      <ion-textarea [(ngModel)]="currentItem.entryText" name="entryText" maxLength="1000" rows="7"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label stacked>Datum</ion-label>

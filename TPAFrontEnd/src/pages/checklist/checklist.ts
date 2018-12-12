@@ -18,7 +18,7 @@ export class ChecklistPage {
     });
   }
 
-  itemTapped(event, item) {
+  itemTapped(item) {
     this.navCtrl.push(ViewItemPage, {
       currentItem: item
     });

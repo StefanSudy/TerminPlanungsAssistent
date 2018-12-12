@@ -1,36 +1,35 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{currentItem.entryName}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <div class="viewDiv">
     <ion-grid>
-        <ion-row>
-          <ion-col>
-            <h3>DueDate</h3>
-          </ion-col>
-          <ion-col col-8>
-            <h3 class="inputValue">{{currentItem.dateDue | date: 'd/M/yy, HH:mm' }}</h3>
-          </ion-col>
-        </ion-row>
-        <ion-row class="dividerRow">
-          <ion-col>
-            <h3>Duration</h3>
-          </ion-col>
-          <ion-col col-8>
-            <h3 class="inputValue">{{currentItem.duration | date: 'HH:mm' }}</h3>
-          </ion-col>
-        </ion-row>
-        <ion-row style="padding-block-start: 15px;">
-          <ion-col>
-              <h3 class="inputValue">{{currentItem.entryText}}</h3>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-row>
+        <ion-col>
+          <h3>DueDate</h3>
+        </ion-col>
+        <ion-col col-8>
+          <h3 class="inputValue">{{currentItem.dateDue | date: 'd/M/yy, HH:mm' }}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row class="dividerRow">
+        <ion-col>
+          <h3>Duration</h3>
+        </ion-col>
+        <ion-col col-8>
+          <h3 class="inputValue">{{currentItem.duration | date: 'HH:mm' }}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row style="padding-block-start: 15px;">
+        <ion-col>
+            <h3 class="inputValue">{{currentItem.entryText}}</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
 <ion-footer>
   <ion-grid>
