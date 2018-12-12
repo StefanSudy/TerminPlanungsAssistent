@@ -14,7 +14,7 @@ namespace TPAWebApi.ModelsDto
         public DateTime DateDue { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
-        public DateTime Duration { get; set; }
+        public short Duration { get; set; }
         [Required]
         public bool Status { get; set; }
         [Required]
