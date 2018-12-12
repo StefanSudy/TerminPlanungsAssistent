@@ -25,7 +25,7 @@ namespace TPAWebApi.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        // GET: api/Users/5
+
         [Produces(typeof(UserDto))]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -35,8 +35,7 @@ namespace TPAWebApi.Controllers
             var _user = _mapper.Map<User, UserDto>(user);
             return Ok(_user);
         }
-
-        // POST: api/Users
+        
         [HttpPost]
         public IActionResult Post(UserDto user)
         {
@@ -46,6 +45,22 @@ namespace TPAWebApi.Controllers
             _unitOfWork.Save();
             user = _mapper.Map<User, UserDto>(_user);
             return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("validate")]
+        public IActionResult Post([FromBody] dynamic data)
+        {
+            string mail = data.mail;
+            string pwd = data.pwd;
+            if (mail == null) throw new ArgumentNullException(nameof(mail));
+            if (pwd == null) throw new ArgumentNullException(nameof(pwd));
+
+            var user = _unitOfWork.Users.Find(x => x.EMail == mail).First();
+            if (user.Active && user.Password == pwd)
+                return Ok(user);
+
+            return BadRequest(user.Password != pwd ? "Password incorrect" : "User not found or inactive");
         }
 
         // PUT: api/Users/5
