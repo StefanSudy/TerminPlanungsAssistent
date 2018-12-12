@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Checkliste</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of currentItems" (click)="itemTapped(item)">
+      {{item.entryName}}
+      <div class="item-note" item-end>
+        {{item.entryText}}
+      </div>
+    </button>
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from <b>{{selectedItem.entryName}}</b>
+  </div>
+</ion-content>
+<ion-footer>
+  <button ion-button block (click)="goToNewForm()">Neuen Eintrag erstellen</button>
+</ion-footer>

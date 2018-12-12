@@ -1,0 +1,21 @@
+button.menuButton{
+    height: 150px !important;
+    font-size: 20px;
+}
+
+h3{
+    font-style: bold;
+    font-size: 20px;
+    color: white;
+}
+
+ion-card{
+    border-top: 5px solid map-get($colors, primary);
+}
+
+ion-card-header.card-header-md{
+    color: white;
+}
+ion-card-header.card-header-ios{
+    color: white;
+}

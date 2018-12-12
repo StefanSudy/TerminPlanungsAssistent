@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Startmenü</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <button ion-button block class="menuButton" (click)="goToChecklist()">Checkliste</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button block class="menuButton" (click)="goToCalendar()">Kalender</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click)="goToNewItem()" style="font-size: 15px">Neuen Eintrag erstellen</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-card>
+    <ion-card-header>
+      <h3 style="color: white; font-size: 20px">Ausstehendes</h3>
+    </ion-card-header>
+    <ion-list>
+        <button ion-item *ngFor="let item of currentItems" (click)="itemTapped(item)">
+            {{item.entryName}}
+          </button>
+    </ion-list>
+  </ion-card>
+</ion-content>

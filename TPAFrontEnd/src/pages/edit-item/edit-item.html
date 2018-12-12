@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{currentItem.entryName}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="saveForm(currentItem)">
+    <ion-item>
+      <ion-label stacked>Name *</ion-label>
+      <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName" maxLength="30"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Beschreibung</ion-label>
+      <ion-textarea [(ngModel)]="currentItem.entryText" name="entryText" maxLength="1000" rows="7"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Datum</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="currentItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
+    </ion-item>
+    <p>* Pflichtfeld</p>
+    <button ion-button type="submit" block>Speichern</button>
+  </form>
+</ion-content>
