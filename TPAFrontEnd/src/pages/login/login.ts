@@ -32,7 +32,6 @@ export class Login {
       
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot({
-      user: this.user
     });
     }else{
       alert("User ist nicht vorhanden.")
