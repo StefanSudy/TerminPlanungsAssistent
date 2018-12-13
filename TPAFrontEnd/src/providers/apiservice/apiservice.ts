@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://localhost:5001/api";
+  baseUrl:string = "https://192.168.1.206:443/api";
 
   constructor(private httpClient : HttpClient) { }
 

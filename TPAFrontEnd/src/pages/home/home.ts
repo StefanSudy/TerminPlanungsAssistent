@@ -17,7 +17,7 @@ export class HomePage {
   private user: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
   }
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
       this.currentItems = currentItems;
     });
@@ -36,5 +36,8 @@ export class HomePage {
   }
   goToNewItem() {
     this.navCtrl.push(NewItemPage);
+  }
+  ionViewWillEnter() {
+   //if user is not logged in, push to login
   }
 }

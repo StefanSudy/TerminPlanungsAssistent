@@ -4,7 +4,7 @@ export class Appointment {
    entryText: string;
    dateDue: Date;
    dateCreated: Date;
-   duration: Date;
+   duration: number;
    status: boolean;
    userID: number;
    constructor(values: Object = {}) {

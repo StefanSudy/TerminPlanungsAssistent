@@ -5,6 +5,7 @@ import { HomePage } from '../home/home';
 import { APIService } from "../../providers/apiservice/apiservice";
 import { User } from '../../models/user';
 
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
