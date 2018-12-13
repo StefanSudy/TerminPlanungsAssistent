@@ -15,7 +15,7 @@ export class NewItemPage {
   }
   saveForm(newItem: Appointment) {
     newItem.status = true;
-    newItem.dateCreated = new Date(Date.now());
+    newItem.dateCreated = new Date();
     newItem.userID = 2;
     this.newItem = newItem;
     this.restService.PostAppointment(newItem).subscribe(

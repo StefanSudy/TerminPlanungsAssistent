@@ -9,12 +9,16 @@
 
 <ion-content>
   <ion-list>
+    <ion-list-header>Header</ion-list-header>
+    <ion-item-group reorder="true">
     <button ion-item *ngFor="let item of currentItems" (click)="itemTapped(item)">
-      {{item.entryName}}
-      <div class="item-note" item-end>
+      <ion-label >{{item.entryName}}</ion-label>
+      <div class="item-note" item-end>{{item.dateDue | date: 'd/M/yy, HH:mm' }}, Aktiv</div> 
+      <!--<div class="item-note" item-content>
         {{item.entryText}}
-      </div>
+      </div>-->
     </button>
+  </ion-item-group>
   </ion-list>
   <div *ngIf="selectedItem" padding>
     You navigated here from <b>{{selectedItem.entryName}}</b>
