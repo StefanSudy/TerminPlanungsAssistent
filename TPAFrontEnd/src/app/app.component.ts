@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
 import { SettingsPage } from '../pages/settings/settings';
 import { CalendarPage } from '../pages/calendar/calendar';
+import { Login } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +27,8 @@ export class MyApp {
       { title: 'Hauptmenü', component: HomePage, icon: 'home'},
       { title: 'Checkliste', component: ChecklistPage, icon: 'checkbox-outline'},
       { title: 'Kalender', component: CalendarPage, icon: 'calendar'},
-      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'}
+      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'},
+      { title: 'Logout', component: Login, icon: 'exit'}
     ];
 
   }
