@@ -8,5 +8,6 @@ namespace BusinessLogic.ServiceAPI
     {
         string GetCurrentEnvironmentName();
         string GetConnectionString();
+        string GetSecretKey();
     }
 }

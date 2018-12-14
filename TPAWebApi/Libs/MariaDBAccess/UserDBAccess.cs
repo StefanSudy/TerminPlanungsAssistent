@@ -17,10 +17,25 @@ namespace MariaDBAccess
             _context = context;
         }
 
-        public void Add(User model)
+        public void Create(User user, string password)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.User.Add(model);
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (password == null) throw new ArgumentNullException("Password is required");
+
+            if(GetByMail(user.EMail) != null)
+                throw new ArgumentException("Username is already taken");
+
+            CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            _context.User.Add(user);
+        }
+
+        public void Create(User user)
+        {
+            Create(user, null);
         }
 
         public void Delete(User model)
@@ -45,9 +60,38 @@ namespace MariaDBAccess
 
         public void UpdateById(int id, User user)
         {
+            UpdateById(id, user, null);
+        }
+
+        public User GetByMail(string userMail)
+        {
+            if (userMail == null) throw new ArgumentNullException(nameof(userMail));
+            var user = _context.User.SingleOrDefault(x => x.EMail == userMail);
+            return user;
+        }
+
+        public void UpdateById(int id, User user, string password = null)
+        {
             if (user == null) throw new ArgumentNullException(nameof(user));
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
-            user.Id = id;
+
+            var _user = Get(id);
+            if (user.EMail != _user.EMail)
+            {
+                if (_context.User.Any(x => x.EMail == user.EMail))
+                    throw new ArgumentException($"Username {user.EMail} is already taken!");
+            }
+
+            _user.EMail = user.EMail;
+
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                CreatePasswordHash(password, out var passwordHash, out var passwordSalt);
+
+                _user.PasswordHash = passwordHash;
+                _user.PasswordSalt = passwordSalt;
+            }
+
             _context.User.Update(user);
         }
 
@@ -55,6 +99,49 @@ namespace MariaDBAccess
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             return _context.User.Where(predicate);
+        }
+
+        public User Authenticate(string userMail, string password)
+        {
+            if (userMail == null) throw new ArgumentNullException(nameof(userMail));
+            if (password == null) throw new ArgumentNullException(nameof(password));
+
+            var user = GetByMail(userMail);
+
+            if (user == null)
+                return null;
+
+            return !VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt) ? null : user;
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            if (password == null) throw new ArgumentNullException(nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
+
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            if (password == null) throw new ArgumentNullException(nameof(password));
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(password));
+            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                if (computedHash.Where((t, i) => t != storedHash[i]).Any())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -9,8 +9,8 @@ namespace BusinessLogic.Models
     {
         [Required]
         public string EMail { get; set; }
-        [Required]
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         [Required]
         public bool Active { get; set; }
     }
