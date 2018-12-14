@@ -8,6 +8,7 @@ using BusinessLogic.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TPAWebApi.ModelsDto;
+
 namespace TPAWebApi.Controllers
 {
     [Route("api/[controller]")]
@@ -52,7 +53,7 @@ namespace TPAWebApi.Controllers
         {
             if (appointment == null) throw new ArgumentNullException(nameof(appointment));
             var _appointment = _mapper.Map<AppointmentDto, Appointment>(appointment);
-            _unitOfWork.Appointments.Create(_appointment);
+            _unitOfWork.Appointments.Add(_appointment);
             _unitOfWork.Save();
             appointment = _mapper.Map<Appointment, AppointmentDto>(_appointment);
             return Ok(appointment);
