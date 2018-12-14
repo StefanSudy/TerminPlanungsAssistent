@@ -79,7 +79,12 @@ namespace TPAWebApi.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody]UserDto userDto)
         {
-            var user = _mapper.Map<User>(userDto);
+            //var user = _mapper.Map<UserDto, User>(userDto);
+            var user = new User
+            {
+                EMail = userDto.EMail,
+                Active = userDto.Active,
+            };
 
             try
             {

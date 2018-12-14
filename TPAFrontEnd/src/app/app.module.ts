@@ -18,7 +18,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProvider } from '../providers/userprovider/userprovider';
-import { AuthserviceProvider } from '../providers/authservice/authservice';
+import { AuthRequestOptions } from '../providers/authservice/authrequest';
+import { RequestOptions } from '@angular/http';
+import { AuthErrorHandler } from '../providers/authservice/autherrorhandler';
 
 @NgModule({
   declarations: [
@@ -57,8 +59,8 @@ import { AuthserviceProvider } from '../providers/authservice/authservice';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
     UserProvider,
-    AuthserviceProvider
-  
+    {provide: RequestOptions, useClass: AuthRequestOptions},
+    {provide: ErrorHandler, useClass: AuthErrorHandler}
   ]
 })
 export class AppModule {}
