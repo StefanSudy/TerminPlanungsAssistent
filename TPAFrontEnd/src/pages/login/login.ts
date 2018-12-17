@@ -34,7 +34,7 @@ export class Login {
     this.navCtrl.popToRoot({
     });
     }else{
-      alert("User ist nicht vorhanden.")
+      //alert("User ist nicht vorhanden.")
     }
   }
 
