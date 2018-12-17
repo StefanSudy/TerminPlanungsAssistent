@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using BusinessLogic.DataAPI;
 using BusinessLogic.Dependencies;
+using BusinessLogic.Models;
 using BusinessLogic.ServiceAPI;
 using MariaDBAccess;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using TPAWebApi.Dependencies;
 
@@ -35,16 +40,14 @@ namespace TPAWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info {Title = "Termin Planungs Assistent", Version = "v1"});
+                c.AddSecurityDefinition("https", new ApiKeyScheme());
                 c.DescribeAllEnumsAsStrings();
             });
             services.AddDbContext<TpaContext>();
-
             AutoMapper.Configure();
 
             services.AddCors();
@@ -62,10 +65,42 @@ namespace TPAWebApi
                 options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
                 options.HttpsPort = 5001;
             });
-
-
-
             new MariaDBAccess.ServiceRegistration(dependencyResolver.Resolve<IConfigProvider>()).RegisterServices(DependencyRegistry);
+
+            var configProvider = new AspDotNetCoreConfigProvider(Configuration);
+            var key = Encoding.ASCII.GetBytes(configProvider.GetSecretKey());
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            var userContext = context.HttpContext.RequestServices.GetService<IUnitOfWork>();
+                            var userId = int.Parse(context.Principal.Identity.Name);
+                            var user = userContext.Users.Get(userId);
+                            if (user == null)
+                            {
+                                // return unauthorized if user no longer exists
+                                context.Fail("Unauthorized");
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +121,8 @@ namespace TPAWebApi
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
+
+            app.UseAuthentication();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

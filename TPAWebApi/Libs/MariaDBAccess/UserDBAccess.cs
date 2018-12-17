@@ -76,11 +76,13 @@ namespace MariaDBAccess
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
 
             var _user = Get(id);
-            if (user.EMail != _user.EMail)
-            {
-                if (_context.User.Any(x => x.EMail == user.EMail))
-                    throw new ArgumentException($"Username {user.EMail} is already taken!");
-            }
+
+            //ToDo: Handle this if to look if username is already taken
+            //if (user.EMail != _user.EMail)
+            //{
+            //    if (_context.User.Any(x => x.EMail == user.EMail))
+            //        throw new ArgumentException($"Username {user.EMail} is already taken!");
+            //}
 
             _user.EMail = user.EMail;
 
@@ -92,7 +94,7 @@ namespace MariaDBAccess
                 _user.PasswordSalt = passwordSalt;
             }
 
-            _context.User.Update(user);
+            _context.User.Update(_user);
         }
 
         public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)

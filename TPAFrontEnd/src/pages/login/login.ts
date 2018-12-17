@@ -23,8 +23,6 @@ export class Login {
     if(true){ //User ist gültig
     this.navCtrl.setRoot(HomePage);
     this.navCtrl.popToRoot();
-    }else{
-      alert("User ist nicht vorhanden.")
     }
   }
 

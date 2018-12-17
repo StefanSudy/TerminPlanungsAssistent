@@ -18,7 +18,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
   }
   ionViewDidEnter() {
-    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+    this.restProvider.GetAppointmentsForUser(3).subscribe((currentItems : Appointment[]) => {
       this.currentItems = currentItems;
     });
   }

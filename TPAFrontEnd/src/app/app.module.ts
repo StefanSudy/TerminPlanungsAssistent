@@ -18,9 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProvider } from '../providers/userprovider/userprovider';
-import { AuthRequestOptions } from '../providers/authservice/authrequest';
-import { RequestOptions } from '@angular/http';
-import { AuthErrorHandler } from '../providers/authservice/autherrorhandler';
+import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -38,6 +36,15 @@ import { AuthErrorHandler } from '../providers/authservice/autherrorhandler';
   imports: [
     BrowserModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['localhost:5001'],
+        blacklistedRoutes: ['localhost:5001/api/']
+      }
+    }),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -59,8 +66,6 @@ import { AuthErrorHandler } from '../providers/authservice/autherrorhandler';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
     UserProvider,
-    {provide: RequestOptions, useClass: AuthRequestOptions},
-    {provide: ErrorHandler, useClass: AuthErrorHandler}
   ]
 })
 export class AppModule {}

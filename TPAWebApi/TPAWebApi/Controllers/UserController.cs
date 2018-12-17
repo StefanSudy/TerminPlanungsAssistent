@@ -40,7 +40,14 @@ namespace TPAWebApi.Controllers
         {
             if (id <= 0) return BadRequest(nameof(id));
             var user = _unitOfWork.Users.Get(id);
-            var _user = _mapper.Map<User, UserDto>(user);
+            //var _user = _mapper.Map<User, UserDto>(user);
+            var _user = new UserDto
+            {
+                Id = user.Id,
+                EMail = user.EMail,
+                Active = user.Active
+            };
+
             return Ok(_user);
         }
 
@@ -101,14 +108,20 @@ namespace TPAWebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UserDto userDto)
         {
-            var user = _mapper.Map<User>(userDto);
-            user.Id = id;
+            //var user = _mapper.Map<User>(userDto);
+            var user = new User
+            {
+                Active = userDto.Active,
+                EMail = userDto.EMail,
+                Id = id
+            };
+
 
             try
             {
                 _unitOfWork.Users.UpdateById(id, user, userDto.Password);
                 _unitOfWork.Save();
-                return Ok();
+                return Ok(user);
             }
             catch (Exception ex)
             {
