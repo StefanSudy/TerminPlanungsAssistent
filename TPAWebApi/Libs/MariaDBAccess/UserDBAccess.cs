@@ -54,7 +54,7 @@ namespace MariaDBAccess
         public User Get(int id)
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
-            var user = _context.User.First(x => x.Id == id) ?? throw new ArgumentNullException(nameof(id));
+            var user = _context.User.Find(id) ?? throw new ArgumentNullException(nameof(id));
             return user;
         }
 

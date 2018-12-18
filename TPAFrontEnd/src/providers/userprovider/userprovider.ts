@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserProvider {
@@ -10,6 +11,8 @@ export class UserProvider {
   }
   public setUser(user: User) {
     this.user = user;
+    localStorage.setItem('access_token', user.token);
+    localStorage.setItem('user_id', user.id.toString());
   }
   public getUser() {
      return this.user;

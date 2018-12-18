@@ -10,7 +10,7 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { ViewItemPage } from '../pages/view-item/view-item';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { NewItemPage } from '../pages/new-item/new-item';
-import { Login } from '../pages/login/login';
+import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,7 +18,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProvider } from '../providers/userprovider/userprovider';
-import { JwtModule } from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -30,21 +29,12 @@ import { JwtModule } from "@auth0/angular-jwt";
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    Login,
+    LoginPage,
     RegisterPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['localhost:5001'],
-        blacklistedRoutes: ['localhost:5001/api/']
-      }
-    }),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -57,7 +47,7 @@ import { JwtModule } from "@auth0/angular-jwt";
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    Login,
+    LoginPage,
     RegisterPage
   ],
   providers: [

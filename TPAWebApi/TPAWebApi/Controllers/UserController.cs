@@ -9,6 +9,7 @@ using AutoMapper;
 using BusinessLogic.DataAPI;
 using BusinessLogic.Models;
 using BusinessLogic.ServiceAPI;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -39,13 +40,18 @@ namespace TPAWebApi.Controllers
         public IActionResult Get(int id)
         {
             if (id <= 0) return BadRequest(nameof(id));
+
+            if (!userAuthorized(Request.Headers["Authorization"], id))
+                return Unauthorized();
+
             var user = _unitOfWork.Users.Get(id);
+
             //var _user = _mapper.Map<User, UserDto>(user);
             var _user = new UserDto
             {
                 Id = user.Id,
                 EMail = user.EMail,
-                Active = user.Active
+                Active = user.Active,
             };
 
             return Ok(_user);
@@ -76,7 +82,7 @@ namespace TPAWebApi.Controllers
 
             return Ok(new
             {
-                Id = user.Id,
+                user.Id,
                 Usermail = user.EMail,
                 Token = tokenString
             });
@@ -108,6 +114,9 @@ namespace TPAWebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]UserDto userDto)
         {
+            if (!userAuthorized(Request.Headers["Authorization"], id))
+                return Unauthorized();
+
             //var user = _mapper.Map<User>(userDto);
             var user = new User
             {
@@ -132,49 +141,31 @@ namespace TPAWebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            if (!userAuthorized(Request.Headers["Authorization"], id))
+                return Unauthorized();
+
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             _unitOfWork.Users.DeleteById(id);
             _unitOfWork.Save();
             return Ok();
         }
 
-        //[HttpPost]
-        //public IActionResult Post(UserDto user)
-        //{
-        //    if (user == null) throw new ArgumentNullException(nameof(user));
-        //    var _user = _mapper.Map<UserDto, User>(user);
-        //    _unitOfWork.Users.Create(_user);
-        //    _unitOfWork.Save();
-        //    user = _mapper.Map<User, UserDto>(_user);
-        //    return Ok(user);
-        //}
 
-        //[HttpPost]
-        //[Route("validate")]
-        //public IActionResult Post([FromBody] dynamic data)
-        //{
-        //    string mail = data.mail;
-        //    string pwd = data.pwd;
-        //    if (mail == null) throw new ArgumentNullException(nameof(mail));
-        //    if (pwd == null) throw new ArgumentNullException(nameof(pwd));
+        private static bool userAuthorized(string tokenString, int id)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
 
-        //    var user = _unitOfWork.Users.Find(x => x.EMail == mail).First();
-        //    if (user.Active && user.Password == pwd)
-        //        return Ok(user);
+            tokenString = tokenString
+                .Replace("Bearer ", "")
+                .Replace(" ", "");
+            var token = tokenHandler.ReadJwtToken(tokenString);
+            int.TryParse(token.Claims
+                    .ToArray()[0]
+                    .ToString()
+                    .Split(':')[1]
+                , out var userId);
 
-        //    return BadRequest(user.Password != pwd ? "Password incorrect" : "User not found or inactive");
-        //}
-
-        // PUT: api/Users/5
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, UserDto user)
-        //{
-        //    if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
-        //    var _user = _mapper.Map<UserDto, User>(user);
-        //    _unitOfWork.Users.UpdateById(id, _user);
-        //    _unitOfWork.Save();
-        //    user = _mapper.Map<User, UserDto>(_user);
-        //    return Ok(user);
-        //}
+            return userId == id;
+        }
     }
 }

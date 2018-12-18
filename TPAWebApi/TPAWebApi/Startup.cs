@@ -10,6 +10,7 @@ using BusinessLogic.Models;
 using BusinessLogic.ServiceAPI;
 using MariaDBAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -123,6 +124,7 @@ namespace TPAWebApi
             });
 
             app.UseAuthentication();
+
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

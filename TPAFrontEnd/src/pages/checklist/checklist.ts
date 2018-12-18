@@ -13,7 +13,7 @@ export class ChecklistPage {
   currentItems: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
-    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
       this.currentItems = currentItems;
     });
   }

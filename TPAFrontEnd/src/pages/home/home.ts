@@ -17,8 +17,8 @@ export class HomePage {
   private user: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
   }
-  ionViewDidEnter() {
-    this.restProvider.GetAppointmentsForUser(3).subscribe((currentItems : Appointment[]) => {
+  ionViewDidLoad() {
+    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
       this.currentItems = currentItems;
     });
   }
