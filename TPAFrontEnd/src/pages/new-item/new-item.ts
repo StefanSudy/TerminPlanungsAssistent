@@ -12,8 +12,6 @@ export class NewItemPage {
   newItem: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService) {
     this.newItem = new Appointment;
-    console.log(this.navParams.get('selectedDay'));
-    this.newItem.dateDue = this.navParams.get('selectedDay');
   }
   saveForm(newItem: Appointment) {
     newItem.status = true;

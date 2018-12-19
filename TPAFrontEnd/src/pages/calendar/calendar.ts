@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { ViewItemPage } from '../view-item/view-item';
 import moment from 'moment';
-import { NewItemPage } from '../new-item/new-item';
+//Api-Services
+import { APIService } from '../../providers/apiservice/apiservice';
+import { Appointment } from '../../models/appointment';
+//import { User } from '../../models/user';
 /**
  * Generated class for the CalendarPage page.
  *
@@ -15,10 +19,10 @@ import { NewItemPage } from '../new-item/new-item';
   templateUrl: 'calendar.html',
 })
 export class CalendarPage {
-
   eventSource = [];
   viewTitle: string;
-  selectedDay = Date;
+  selectedDay = new Date();
+  public currentItems: any = [];
  
   calendar = {
     mode: 'month',
@@ -26,11 +30,31 @@ export class CalendarPage {
     locale: 'de-AT'
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, public restProvider: APIService) {
   }
 
   addEvent() {
-    this.navCtrl.push(NewItemPage, {selectedDay: this.selectedDay});
+    let modal = this.modalCtrl.create('EventModalPage', {selectedDay: this.selectedDay});
+    modal.present();
+    modal.onDidDismiss(answer => {
+      if (answer) {
+        this.currentItems.push(answer);
+        let events = this.eventSource;
+        let endTime = moment(answer.dateDue).add(answer.duration, 'minutes').format();
+        this.eventSource = [];
+        events.push({
+          title: new String(answer.entryName),
+          startTime: new Date(answer.dateDue),
+          endTime: new Date(endTime),
+          allDay: false,
+          id: answer.id
+        });
+        setTimeout(() => {
+          this.eventSource = events;
+        });
+      }
+      
+    });
   }
  
   onViewTitleChanged(title) {
@@ -38,23 +62,45 @@ export class CalendarPage {
   }
  
   onEventSelected(event) {
-    let start = moment(event.startTime).format('LLLL');
-    let end = moment(event.endTime).format('LLLL');
-    
-    let alert = this.alertCtrl.create({
-      title: '' + event.title,
-      subTitle: 'From: ' + start + '<br>To: ' + end,
-      buttons: ['OK']
-    })
-    alert.present();
+    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+      this.currentItems=currentItems;
+    });    
+    for(let item of this.currentItems){
+      if(item.id == event.id && event.id != null){ //Nur das gerade ausgewählte Element und wenn es in der Datenbank gefunden wurde.
+        this.navCtrl.push(ViewItemPage, {
+          currentItem: item
+        });
+      }
+    }
   }
  
   onTimeSelected(ev) {
     this.selectedDay = ev.selectedTime;
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CalendarPage');
+  ionViewWillEnter() {
+    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+      this.currentItems=currentItems;
+    });    
+  }
+
+  ionViewDidEnter() {
+    let events = [];
+    let endTime;
+    for (let item of this.currentItems) {
+      if(item.dateDue != null && item.status == true){    //Nur wenn Datum vorhanden und Item noch nicht abgehandelt. 
+        endTime = moment(item.dateDue).add(item.duration, 'minutes').format();
+        events.push({
+          title: new String(item.entryName),
+          startTime: new Date(item.dateDue),
+          endTime: new Date(endTime),
+          allDay: false,
+          id: item.id
+        });
+      }
+    }
+    this.eventSource = events;
   }
 
 }
