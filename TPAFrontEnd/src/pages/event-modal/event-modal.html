@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Eintrag erstellen</ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+  <form (ngSubmit)="save()">
+    <ion-item>
+      <ion-label stacked>Name *</ion-label>
+      <ion-input type="text" [(ngModel)]="newItem.entryName" name="entryName" clearInput=true></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Beschreibung</ion-label>
+      <ion-textarea [(ngModel)]="newItem.entryText" name="entryText" maxLength="1000" rows="7"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Datum</ion-label>
+      <ion-datetime displayFormat="DD/MMM/YYYY HH:mm" [(ngModel)]="newItem.dateDue" name="dateDue"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Dauer</ion-label>
+      <ion-input type="number" [(ngModel)]="newItem.duration" name="duration" min=0 max=1440 step=5></ion-input>
+    </ion-item>
+    <p>* Pflichtfeld</p>
+    <button ion-button type="submit" block><ion-icon name="checkmark"></ion-icon> Speichern</button>
+  </form>
+</ion-content>

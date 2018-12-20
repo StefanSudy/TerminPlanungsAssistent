@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+  <ion-navbar color="primary">
       <ion-title>Eintrag erstellen</ion-title>
     </ion-navbar>
   </ion-header>
@@ -12,11 +12,15 @@
       </ion-item>
       <ion-item>
         <ion-label stacked>Beschreibung</ion-label>
-        <ion-textarea [(ngModel)]="newItem.entryText" name="entryText" maxLength="999" rows="7"></ion-textarea>
+        <ion-textarea [(ngModel)]="newItem.entryText" name="entryText" maxLength="1000" rows="7"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label stacked>Datum</ion-label>
         <ion-datetime displayFormat="DD/MMM/YYYY HH:mm" [(ngModel)]="newItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Dauer</ion-label>
+        <ion-input type="text" [(ngModel)]="newItem.duration" name="duration" clearInput=true></ion-input>
       </ion-item>
       <p>* Pflichtfeld</p>
       <button ion-button type="submit" block>Speichern</button>

@@ -17,7 +17,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-import { ExpandableComponent } from '../components/expandable/expandable';
+import { UserProvider } from '../providers/userprovider/userprovider';
+//Importieren des Kalendermodules
+import { NgCalendarModule  } from 'ionic2-calendar';
+//Um die Sprache für den Kalender zu ändern
+import {LOCALE_ID} from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDEAT from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeDEAT);
+//Sprache Kalender Ende
 
 @NgModule({
   declarations: [
@@ -34,6 +43,7 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     ExpandableComponent,
   ],
   imports: [
+    NgCalendarModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp)
@@ -56,6 +66,9 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
+    UserProvider,
+    { provide: LOCALE_ID, useValue: 'de-AT' },//Es wird das deutsch Sprachpaket geladen.
+  
   ]
 })
 export class AppModule {}
