@@ -8,15 +8,15 @@
     <form (ngSubmit)="saveForm(newItem)">
       <ion-item>
         <ion-label stacked>Name *</ion-label>
-        <ion-input type="text" [(ngModel)]="newItem.entryName" name="entryName"></ion-input>
+        <ion-input type="text" [(ngModel)]="newItem.entryName" name="entryName" maxLength="255"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Beschreibung</ion-label>
-        <ion-textarea [(ngModel)]="newItem.entryText" name="entryText" maxLength="256" rows="7"></ion-textarea>
+        <ion-textarea [(ngModel)]="newItem.entryText" name="entryText" maxLength="999" rows="7"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label stacked>Datum</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="newItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
+        <ion-datetime displayFormat="DD/MMM/YYYY HH:mm" [(ngModel)]="newItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
       </ion-item>
       <p>* Pflichtfeld</p>
       <button ion-button type="submit" block>Speichern</button>

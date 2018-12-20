@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms'
-import { EmailValidator } from '../../app/emailValidate';
 import { HomePage } from '../home/home';
-
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { APIService } from '../../providers/apiservice/apiservice';
+import { User } from '../../models/user';
 
 @IonicPage()
 @Component({
@@ -17,35 +10,88 @@ import { HomePage } from '../home/home';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  email: string;
+  password: string;  
 
-  email:AbstractControl;
-  password:AbstractControl;
-  passwordRepeat:AbstractControl;
-  signupForm:FormGroup;
-
-  constructor(public formBuilder: FormBuilder, public navCtrl: NavController, public navParams: NavParams) {
-    this.signupForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, EmailValidator.isValid, Validators.maxLength(30)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      passwordRepeat: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
-    });
-    this.email=this.signupForm.controls['email'];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restProvider: APIService) {
+    this.email = this.navParams.get('email');
+    this.password = this.navParams.get('password');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-  register(){
-    //if(this.email.length==0 || this.password.length==0 || this.passwordRepeat.length==0)
-      //alert("Bitte alle Felder ausfüllen!")
-    if(this.signupForm.valid){
-      this.navCtrl.setRoot(HomePage);
-      this.navCtrl.popToRoot();
+  validateMail(email: string, event?): boolean {
+    if(email){
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;   
+      if (!regex.test(email)) {
+        console.log("E-Mail Adresse ungültig.");
+        if (event) {
+          event.target.style.borderRight = "6px solid red";
+        }
+        return false;
+      }
+      if(event) {
+        event.target.style.borderRight = "0px";
+      }
+      return true;
     }
-    else{
-      
+    return false;
+  }
+  validatePassword(pwd: string, event?): boolean {
+    if(pwd){
+      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;   
+      if (!regex.test(pwd)) {
+        console.log("Passwort ungültig: Mindestens 1 Buchstabe, eine Zahl und acht Zeichen lang.");
+        if (event) {
+          event.target.style.borderRight = "6px solid red";
+        }
+        return false;
+      }
+      if(event) {
+        event.target.style.borderRight = "0px";
+      }
+      return true;
     }
+    return false;
+  }
+  validatePasswordRepeat(pwdRepeat: string, pwd: string, event?): boolean {
+    if(pwdRepeat && pwd) {
+      if(pwdRepeat != pwd) {
+        console.log("Passwort ist nicht gleich.");
+        if (event) {
+          event.target.style.borderRight = "6px solid red";
+        }
+        return false;
+      }
+      if(event) {
+        event.target.style.borderRight = "0px";
+      }
+      return true;
+    }
+    return false;
   }
 
+  register(email: string, pwd: string, passwordRepeat: string){
+    if (this.validateMail(email) 
+    && this.validatePassword(pwd) 
+    && this.validatePasswordRepeat(passwordRepeat, pwd)) {
+      var user = new User({
+        eMail: email,
+        password: pwd,
+        active: true
+      });
+      this.restProvider.PostUser(user).subscribe(
+        response => {
+          this.restProvider.PostValidateUser(email, pwd, true).subscribe(
+            response => {
+              localStorage.setItem('user_id', response.id.toString());
+              localStorage.setItem('access_token', response.token);
+              this.navCtrl.setRoot(HomePage);
+              this.navCtrl.popToRoot();
+            });
+        });
+    }
+  }
 }
