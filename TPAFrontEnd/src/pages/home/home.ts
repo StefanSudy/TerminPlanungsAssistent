@@ -17,6 +17,11 @@ export class HomePage {
   private user: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
   }
+  ionViewDidEnter() {
+    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+      this.currentItems = currentItems;
+    });
+  }
   itemTapped(item) {
     this.navCtrl.push(ViewItemPage, { 
       currentItem: item
@@ -32,9 +37,7 @@ export class HomePage {
   goToNewItem() {
     this.navCtrl.push(NewItemPage);
   }
-  ionViewDidEnter() {
-    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
-      this.currentItems = currentItems;
-    });
+  ionViewWillEnter() {
+   //if user is not logged in, push to login
   }
 }

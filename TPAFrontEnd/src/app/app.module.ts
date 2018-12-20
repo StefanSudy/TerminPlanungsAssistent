@@ -10,14 +10,14 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { ViewItemPage } from '../pages/view-item/view-item';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { NewItemPage } from '../pages/new-item/new-item';
-import { LoginPage } from '../pages/login/login';
+import { Login } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-import { ExpandableComponent } from '../components/expandable/expandable';
+import { UserProvider } from '../providers/userprovider/userprovider';
 
 @NgModule({
   declarations: [
@@ -29,9 +29,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    LoginPage,
-    RegisterPage,
-    ExpandableComponent,
+    Login,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +47,7 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    LoginPage,
+    Login,
     RegisterPage
   ],
   providers: [
@@ -56,6 +55,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
+    UserProvider
+  
   ]
 })
 export class AppModule {}

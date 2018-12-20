@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Appointment } from '../../models/appointment';
 import { APIService } from '../../providers/apiservice/apiservice';
 
@@ -14,21 +14,21 @@ export class NewItemPage {
     this.newItem = new Appointment;
   }
   saveForm(newItem: Appointment) {
-    if(newItem.entryName)
-    {
-      newItem.status = true;
-      newItem.dateCreated = new Date();
-      newItem.userID = +localStorage.getItem('user_id');
-      this.newItem = newItem;
-      this.restService.PostAppointment(newItem).subscribe(
-        (createdItem) => {
-          this.newItem = createdItem;
-          this.navCtrl.pop();
-        }
-      );
-    }
+    newItem.status = true;
+    newItem.dateCreated = new Date();
+    newItem.userID = 2;
+    this.newItem = newItem;
+    this.restService.PostAppointment(newItem).subscribe(
+      (createdItem) => {
+        this.newItem = createdItem;
+      }
+    );
+    this.navCtrl.pop();
+  }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad NewItemPage');
   }
   emptyDate() {
-    this.newItem.dateDue = new Date(-8640000000000000);
+    this.newItem.dateDue = null;
   }
 }

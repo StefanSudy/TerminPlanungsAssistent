@@ -14,10 +14,7 @@ namespace TPAWebApi
         {
             Mapper.Initialize(
                 cfg => cfg
-                    .CreateMap<UserDto, User>()
-                    .ForMember(x => x.Id, opt => opt.Ignore())
-                    .ForMember(x => x.PasswordHash, opt => opt.Ignore())
-                    .ForMember(x => x.PasswordSalt, opt => opt.Ignore())
+                    .CreateMap<UserDto, User>().ForMember(x => x.Id, opt => opt.Ignore())
             );
         }
     }

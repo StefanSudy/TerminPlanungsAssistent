@@ -7,7 +7,6 @@ export class Appointment {
    duration: number;
    status: boolean;
    userID: number;
-   expand: boolean;
    constructor(values: Object = {}) {
         Object.assign(this, values);
    }

@@ -1,8 +1,6 @@
-ion-item.loginItem {
-  background-color: #191919;
-}
-
-ion-title.loginPage {
-  margin-top: 15vh; 
-  margin-bottom: 5vh;
+page-login {
+  ion-title *{
+    margin-top: 20vh;
+    margin-bottom: 5vh;
+  }
 }
