@@ -17,10 +17,15 @@ namespace MariaDBAccess
             _context = context;
         }
 
-        public void Add(Appointment model)
+        public void Create(Appointment user)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.Appointment.Add(model);
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            _context.Appointment.Add(user);
+        }
+
+        public void Create(Appointment user, string pwd)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Appointment model)
@@ -51,10 +56,20 @@ namespace MariaDBAccess
             _context.Appointment.Update(model);
         }
 
+        public void UpdateById(int id, Appointment model, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Appointment> Find(Expression<Func<Appointment, bool>> predicate)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             return _context.Appointment.Where(predicate);
+        }
+
+        public Appointment Authenticate(string userMail, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }
