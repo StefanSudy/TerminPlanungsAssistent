@@ -62,7 +62,7 @@ export class CalendarPage {
   }
  
   onEventSelected(event) {
-    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
       this.currentItems=currentItems;
     });    
     for(let item of this.currentItems){
@@ -80,8 +80,10 @@ export class CalendarPage {
   }
 
   ionViewWillEnter() {
-    this.restProvider.GetAppointmentsForUser(2).subscribe((currentItems : Appointment[]) => {
+    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id'))
+    .subscribe((currentItems : Appointment[]) => {
       this.currentItems=currentItems;
+
     });    
   }
 

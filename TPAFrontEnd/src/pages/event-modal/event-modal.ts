@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import * as moment from 'moment';
 import { Appointment } from '../../models/appointment';
-import { User } from '../../models/user';
 import { APIService } from '../../providers/apiservice/apiservice';
  
 @IonicPage()
@@ -26,7 +25,7 @@ export class EventModalPage {
   save() {
     this.newItem.status = true;
     this.newItem.dateCreated = new Date();
-    this.newItem.userID = 2;
+    this.newItem.userID = +localStorage.getItem('user_id');
     this.restService.PostAppointment(this.newItem).subscribe(
       (createdItem) => {
         this.newItem = createdItem;
