@@ -17,6 +17,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
+import { ExpandableComponent } from '../components/expandable/expandable';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     EditItemPage,
     NewItemPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ExpandableComponent,
   ],
   imports: [
     BrowserModule,

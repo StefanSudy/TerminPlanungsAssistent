@@ -78,11 +78,11 @@ namespace MariaDBAccess
             var _user = Get(id);
 
             //ToDo: Handle this if to look if username is already taken
-            //if (user.EMail != _user.EMail)
-            //{
-            //    if (_context.User.Any(x => x.EMail == user.EMail))
-            //        throw new ArgumentException($"Username {user.EMail} is already taken!");
-            //}
+            if (user.EMail != _user.EMail)
+            {
+                if (GetByMail(user.EMail) != null)
+                    throw new ArgumentException($"Username {user.EMail} is already taken!");
+            }
 
             _user.EMail = user.EMail;
 

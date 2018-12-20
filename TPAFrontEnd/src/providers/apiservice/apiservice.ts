@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable} from 'rxjs/Observable';
 import { Appointment } from '../../models/appointment';
 import { User } from '../../models/user';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+
 
 @Injectable()
 export class APIService {
@@ -19,7 +20,8 @@ export class APIService {
     })
     .map((appointments: Appointment[]) => {
       return appointments.map((appointment) => new Appointment(appointment));
-    });
+    })
+    .catch((error: any) => Observable.throw(this.errorHandler(error)));
   }
   public PostAppointment(appointment: Appointment): Observable<Appointment> {
     return this.httpClient.post(this.baseUrl + '/appointments/', appointment, { 
@@ -27,7 +29,8 @@ export class APIService {
     })
     .map(response => { 
       return new Appointment(response)
-    });
+    })
+    .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
   public PutAppointment(id: number, appointment: Appointment): Observable<Appointment> {
     return this.httpClient.put(this.baseUrl + '/appointments/' + id, appointment, { 
@@ -35,7 +38,8 @@ export class APIService {
     })
     .map((response) => {
       return new Appointment(response)
-    });
+    })
+    .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
   public DeleteAppointment(id: number) {
     return this.httpClient.delete(this.baseUrl + '/appointments/' + id, { 
@@ -48,13 +52,19 @@ export class APIService {
     return this.httpClient.post(this.baseUrl + '/user/authenticate/', { eMail, password, active })
     .map(response => {
       return new User(response);
-    });
+    })
+    .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
   public PostUser(user: User)
   {
-    return this.httpClient.post(this.baseUrl + '/user/', user)
+    return this.httpClient.post(this.baseUrl + '/user/register/', user)
     .map(response => {
       return new User(response);
     })
+    .catch((error: any) => Observable.throw(this.errorHandler(error)));
+  }
+
+  errorHandler(error): void {
+    console.log(error);
   }
 }

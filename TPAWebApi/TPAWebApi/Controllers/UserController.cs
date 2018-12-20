@@ -103,7 +103,7 @@ namespace TPAWebApi.Controllers
             {
                 _unitOfWork.Users.Create(user, userDto.Password);
                 _unitOfWork.Save();
-                return Ok();
+                return Ok(user);
             }
             catch (Exception ex)
             {
