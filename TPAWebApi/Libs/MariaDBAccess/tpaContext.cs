@@ -66,7 +66,7 @@ namespace MariaDBAccess
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PasswordHash)
+                entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);

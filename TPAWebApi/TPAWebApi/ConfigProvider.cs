@@ -25,10 +25,5 @@ namespace TPAWebApi
         {
             return _configuration["ConnectionStrings:TPADataBase"];
         }
-
-        public string GetSecretKey()
-        {
-            return _configuration["AppSettings:Secret"];
-        }
     }
 }

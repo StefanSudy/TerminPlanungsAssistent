@@ -13,12 +13,7 @@
       </button>
     </ion-list>
   </ion-content>
-  <ion-footer>
-    <button menuClose ion-item style="border-bottom: 0px"  (click)="logout()" icon-start>
-      <ion-icon name="exit"></ion-icon>
-      Logout
-    </button>
-  </ion-footer>
 </ion-menu>
 
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
