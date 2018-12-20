@@ -12,12 +12,21 @@ import { EditItemPage } from '../pages/edit-item/edit-item';
 import { NewItemPage } from '../pages/new-item/new-item';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { ExpandableComponent } from '../components/expandable/expandable';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-import { ExpandableComponent } from '../components/expandable/expandable';
+//Importieren des Kalendermodules
+import { NgCalendarModule  } from 'ionic2-calendar';
+//Um die Sprache für den Kalender zu ändern
+import {LOCALE_ID} from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeDEAT from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeDEAT);
+//Sprache Kalender Ende
 
 @NgModule({
   declarations: [
@@ -34,6 +43,7 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     ExpandableComponent,
   ],
   imports: [
+    NgCalendarModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp)
@@ -56,6 +66,8 @@ import { ExpandableComponent } from '../components/expandable/expandable';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
+    { provide: LOCALE_ID, useValue: 'de-AT' },//Es wird das deutsch Sprachpaket geladen.
+  
   ]
 })
 export class AppModule {}
