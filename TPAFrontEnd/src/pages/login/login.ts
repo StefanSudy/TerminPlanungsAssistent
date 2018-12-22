@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController} from 'ionic-angular';
+import { NavController, AlertController, MenuController} from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
@@ -13,7 +13,8 @@ import { User } from '../../models/user';
 export class LoginPage {
   
   user: User;
-  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController, public menu: MenuController) {
+    //this.menu.enable(false);
   }
 
   ionViewWillLoad() {
