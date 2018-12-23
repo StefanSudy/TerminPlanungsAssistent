@@ -82,8 +82,8 @@ namespace TPAWebApi.Controllers
             return Ok(appointment);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id, [FromBody]int userId)
+        [HttpDelete("{id}/{userId}")]
+        public IActionResult Delete(int id, int userId)
         {
             if (!userAuthorized(Request.Headers["Authorization"], userId))
                 return Unauthorized();

@@ -88,6 +88,7 @@ export class RegisterPage {
             response => {
               localStorage.setItem('user_id', response.id.toString());
               localStorage.setItem('access_token', response.token);
+              localStorage.setItem('appointments', '[]');
               this.navCtrl.setRoot(HomePage);
               this.navCtrl.popToRoot();
             });

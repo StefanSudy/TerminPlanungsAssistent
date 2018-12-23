@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable} from 'rxjs/Observable';
 import { Appointment } from '../../models/appointment';
 import { User } from '../../models/user';
@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://192.168.1.206:443/api";
+  baseUrl:string = "https://localhost:5001/api";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -41,8 +41,8 @@ export class APIService {
     })
     .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
-  public DeleteAppointment(id: number) {
-    return this.httpClient.delete(this.baseUrl + '/appointments/' + id, { 
+  public DeleteAppointment(id: number, userId: number) {
+    return this.httpClient.delete(this.baseUrl + '/appointments/' + id + '/' + userId, { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
     });
   }

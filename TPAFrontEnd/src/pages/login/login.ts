@@ -4,6 +4,7 @@ import { RegisterPage } from '../register/register';
 import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { User } from '../../models/user';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 
 
 @Component({
@@ -13,8 +14,8 @@ import { User } from '../../models/user';
 export class LoginPage {
   
   user: User;
-  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController, public menu: MenuController) {
-    //this.menu.enable(false);
+  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController, public menu: MenuController, private appointmentProvider: AppointmentProvider) {
+    this.menu.enable(false);
   }
 
   ionViewWillLoad() {
@@ -49,8 +50,13 @@ export class LoginPage {
         console.log("Eingaben sind ungültig.");
       },
       () => {
-        this.navCtrl.setRoot(HomePage);
-        this.navCtrl.popToRoot();
+        this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe(
+          response => {
+            this.appointmentProvider.setAppointments(response);
+            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.popToRoot();
+          }
+        )
       });
     }
     else {

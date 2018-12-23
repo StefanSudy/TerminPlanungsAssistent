@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { APIService } from '../../providers/apiservice/apiservice';
+import { NavController, NavParams} from 'ionic-angular';
 import { Appointment } from '../../models/appointment';
 import { ViewItemPage } from '../view-item/view-item';
 import { NewItemPage } from '../new-item/new-item';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 
 @Component({
   selector: 'page-list',
@@ -11,43 +11,32 @@ import { NewItemPage } from '../new-item/new-item';
 
 })
 export class ChecklistPage {
-  currentItems: Appointment[];
-  itemExpandHeight: number = 100;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restProvider: APIService, private menu: MenuController) {
-    this.menu.enable(false);
-  }
+  currentItems: Array<{item: Appointment, expanded: boolean}> = [];
+  itemExpandHeight: number = 80;
 
-  goToItemView(item) {
-    this.navCtrl.push(ViewItemPage, {
-      currentItem: item
-    });
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appointmentProvider: AppointmentProvider) {
   }
 
   ionViewWillLoad() {
-    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe(
-      (currentItems : Appointment[]) => {
-      this.currentItems = currentItems;
-    },
-    error => {
-      console.log(error);
-    },
-    () => {
-      this.currentItems.forEach(element => {
-        element.expand = false;
-      });
+    var items = this.appointmentProvider.getAppointments();
+    items.forEach(item => {
+      this.currentItems.push({item: item, expanded: false});
     });
-
   }
 
   expandItem(item) {
     this.currentItems.map((listItem) => {
- 
       if(item == listItem){
-          listItem.expand = !listItem.expand;
+          listItem.expanded = !listItem.expanded;
       } else {
-          listItem.expand = false;
+          listItem.expanded = false;
       }
-      return listItem;
+    });
+  }
+
+  goToItemView(item) {
+    this.navCtrl.push(ViewItemPage, {
+      currentItem: item.item
     });
   }
 

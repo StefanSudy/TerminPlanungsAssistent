@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { Appointment } from '../../models/appointment';
 import { APIService } from '../../providers/apiservice/apiservice';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,7 @@ import { APIService } from '../../providers/apiservice/apiservice';
 })
 export class NewItemPage {
   newItem: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService, private appointmentProvider: AppointmentProvider) {
     this.newItem = new Appointment;
   }
   saveForm(newItem: Appointment) {
@@ -22,7 +23,7 @@ export class NewItemPage {
       this.newItem = newItem;
       this.restService.PostAppointment(newItem).subscribe(
         (createdItem) => {
-          this.newItem = createdItem;
+          this.appointmentProvider.addAppointment(createdItem);
           this.navCtrl.pop();
         }
       );

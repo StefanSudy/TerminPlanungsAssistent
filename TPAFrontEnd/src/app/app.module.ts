@@ -24,6 +24,7 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import {LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDEAT from '@angular/common/locales/de-AT';
+import { AppointmentProvider } from '../providers/appointmentprovider/appointmentprovider';
 
 registerLocaleData(localeDEAT);
 //Sprache Kalender Ende
@@ -66,7 +67,8 @@ registerLocaleData(localeDEAT);
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
-    { provide: LOCALE_ID, useValue: 'de-AT' },//Es wird das deutsch Sprachpaket geladen.
+    { provide: LOCALE_ID, useValue: 'de-AT' }, //Es wird das deutsch Sprachpaket geladen.
+    AppointmentProvider,
   
   ]
 })

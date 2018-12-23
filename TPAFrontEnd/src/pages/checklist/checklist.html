@@ -9,15 +9,14 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-group reorder="true">
-    <button detail-none ion-item *ngFor="let item of currentItems" (click)="expandItem(item)">
-      <h2>{{item.entryName}}</h2>
-      <div class="item-note" item-end>{{item.dateDue | date: 'd/M/yy, HH:mm' }}</div>
-      <!--<expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
-          {{item.entryNote}}
-      </expandable> -->
-    </button>
-  </ion-item-group>
+    <ion-item *ngFor="let item of currentItems" (click)="expandItem(item)">
+      <h1 style="font-size: 30px">{{item.item.entryName}}</h1>
+      <button ion-button block style="width: 30%; height: 50px" (click)="goToItemView(item)" item-right>Details</button>
+      <expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
+          <p>{{item.item.dateDue | date: 'd/M/yy, HH:mm' }}</p>
+          <h3 text-wrap>{{item.item.entryText}}</h3>
+      </expandable>
+    </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>

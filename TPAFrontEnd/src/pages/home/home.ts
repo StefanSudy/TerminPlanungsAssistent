@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { ChecklistPage } from '../checklist/checklist';
 import { CalendarPage } from '../calendar/calendar';
-import { APIService } from '../../providers/apiservice/apiservice';
-import { Appointment } from '../../models/appointment';
 import { ViewItemPage } from '../view-item/view-item';
 import { NewItemPage } from '../new-item/new-item';
-import { User } from '../../models/user';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 
 @Component({
   selector: 'page-home',
@@ -14,27 +12,29 @@ import { User } from '../../models/user';
 })
 export class HomePage {
   public currentItems: any = [];
-  private user: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public restProvider: APIService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appointmentProvider: AppointmentProvider, public menu: MenuController) {
+    this.menu.enable(true);
   }
+
   itemTapped(item) {
     this.navCtrl.push(ViewItemPage, { 
       currentItem: item
     })
   }
-  goToChecklist()
-  {
+
+  goToChecklist() {
     this.navCtrl.push(ChecklistPage);
   }
-  goToCalendar(){
+  
+  goToCalendar() {
     this.navCtrl.push(CalendarPage);
   }
+
   goToNewItem() {
     this.navCtrl.push(NewItemPage);
   }
-  ionViewDidEnter() {
-    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
-      this.currentItems = currentItems;
-    });
+  
+  ionViewWillEnter() {
+    this.currentItems = this.appointmentProvider.getAppointments()
   }
 }
