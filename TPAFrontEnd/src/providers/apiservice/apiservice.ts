@@ -3,9 +3,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable} from 'rxjs/Observable';
 import { Appointment } from '../../models/appointment';
 import { User } from '../../models/user';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/map';
+import { map, catchError } from 'rxjs/operators';
+import { _throw } from 'rxjs/observable/throw';
 
 @Injectable()
 export class APIService {
@@ -17,20 +18,17 @@ export class APIService {
   public GetAppointmentsForUser(userId: number): Observable<Appointment[]> {
     return this.httpClient.get(this.baseUrl + '/appointments/' + userId, { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
-    })
-    .map((appointments: Appointment[]) => {
+    }).pipe(map((appointments: Appointment[]) => {
       return appointments.map((appointment) => new Appointment(appointment));
-    })
-    .catch((error: any) => Observable.throw(this.errorHandler(error)));
+    }));
   }
   public PostAppointment(appointment: Appointment): Observable<Appointment> {
     return this.httpClient.post(this.baseUrl + '/appointments/', appointment, { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
     })
-    .map(response => { 
-      return new Appointment(response)
-    })
-    .catch((error: any) => Observable.throw(this.errorHandler(error)));;
+    .pipe(map((appointment: Appointment) => {
+      return new Appointment(appointment);
+    }));
   }
   public PutAppointment(id: number, appointment: Appointment): Observable<Appointment> {
     return this.httpClient.put(this.baseUrl + '/appointments/' + id, appointment, { 

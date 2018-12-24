@@ -5,6 +5,8 @@ import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { User } from '../../models/user';
 import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
+import { switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/Observable/of';
 
 
 @Component({
@@ -27,37 +29,39 @@ export class LoginPage {
 
   goToHome(email: string, password: string) {
     if(this.validateMail(email) && password) {
-     this.restProvider.PostValidateUser(email, password, true).subscribe(
-      (response) => {
-        localStorage.setItem('access_token', response.token);
-        localStorage.setItem('user_id', response.id.toString());
-      },
-      (err) => {
-        let alert = this.alertCtrl.create({
-          title: 'E-Mail oder Passwort falsch',
-          message: 'Bitte überprüfen Sie Ihre Eingaben.',
-          buttons: [
-            {
-              text: 'Ok',
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
+
+      this.restProvider.PostValidateUser(email, password, true)
+          .pipe(switchMap((response) => {
+            localStorage.setItem('access_token', response.token);
+            localStorage.setItem('user_id', response.id.toString());
+            return this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id'));
+          }), catchError(error => {
+            console.log(error);
+              let alert = this.alertCtrl.create({
+                title: 'E-Mail oder Passwort falsch',
+                message: 'Bitte überprüfen Sie Ihre Eingaben.',
+                buttons: [
+                  {
+                    text: 'Ok',
+                    role: 'cancel',
+                    handler: () => {
+                      console.log('Cancel clicked');
+                    }
+                  }
+                ]
+              });
+              alert.present();
+              console.log("Eingaben sind ungültig.");
+              return of([]);
+          })).subscribe((result) => {         
+            if(result.length != 0){
+              this.appointmentProvider.setAppointments(result);
+              this.navCtrl.setRoot(HomePage);
+              this.navCtrl.popToRoot();
             }
-          ]
-        });
-        alert.present();
-        console.log("Eingaben sind ungültig.");
-      },
-      () => {
-        this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe(
-          response => {
-            this.appointmentProvider.setAppointments(response);
-            this.navCtrl.setRoot(HomePage);
-            this.navCtrl.popToRoot();
-          }
-        )
-      });
+            }, (error) => {
+              console.log(error);
+            });
     }
     else {
       let alert = this.alertCtrl.create({
