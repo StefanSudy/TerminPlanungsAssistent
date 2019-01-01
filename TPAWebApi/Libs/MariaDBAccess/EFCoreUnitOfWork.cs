@@ -12,7 +12,7 @@ namespace MariaDBAccess
         private readonly TpaContext _context;
         private IConfigProvider _config;
         public IRepository<Appointment> _appointment;
-        public IRepository<User> _user;
+        public IUserRepository<User> _user;
 
         public void Dispose()
         {
@@ -29,6 +29,6 @@ namespace MariaDBAccess
             _context.SaveChanges();
         }
         public IRepository<Appointment> Appointments => _appointment ?? (_appointment = new AppointmentDBAccess(_context));
-        public IRepository<User> Users => _user ?? (_user = new UserDbAccess(_context));
+        public IUserRepository<User> Users => _user ?? (_user = new UserDbAccess(_context));
     }
 }

@@ -8,7 +8,7 @@ using BusinessLogic.Models;
 
 namespace MariaDBAccess
 {
-    class UserDbAccess : IRepository<User>
+    class UserDbAccess : IUserRepository<User>
     {
         private readonly TpaContext _context;
 
@@ -36,12 +36,6 @@ namespace MariaDBAccess
         public void Create(User user)
         {
             Create(user, null);
-        }
-
-        public void Delete(User model)
-        {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.User.Remove(model);
         }
 
         public void DeleteById(int id)
@@ -77,7 +71,6 @@ namespace MariaDBAccess
 
             var _user = Get(id);
 
-            //ToDo: Handle this if to look if username is already taken
             if (user.EMail != _user.EMail)
             {
                 if (GetByMail(user.EMail) != null)

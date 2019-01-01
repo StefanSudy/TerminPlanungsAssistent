@@ -23,17 +23,6 @@ namespace MariaDBAccess
             _context.Appointment.Add(user);
         }
 
-        public void Create(Appointment user, string pwd)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Appointment model)
-        {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.Appointment.Remove(model);
-        }
-
         public void DeleteById(int id)
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
@@ -56,20 +45,10 @@ namespace MariaDBAccess
             _context.Appointment.Update(model);
         }
 
-        public void UpdateById(int id, Appointment model, string password)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Appointment> Find(Expression<Func<Appointment, bool>> predicate)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             return _context.Appointment.Where(predicate);
-        }
-
-        public Appointment Authenticate(string userMail, string password)
-        {
-            throw new NotImplementedException();
         }
     }
 }

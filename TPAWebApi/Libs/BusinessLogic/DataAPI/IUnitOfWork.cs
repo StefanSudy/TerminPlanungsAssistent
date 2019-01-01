@@ -9,6 +9,6 @@ namespace BusinessLogic.DataAPI
     {
         void Save();
         IRepository<Appointment> Appointments { get; }
-        IRepository<User> Users { get; }
+        IUserRepository<User> Users { get; }
     }
 }
