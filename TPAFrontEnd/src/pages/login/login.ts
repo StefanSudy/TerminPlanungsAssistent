@@ -46,6 +46,7 @@ export class LoginPage {
           ]
         });
         alert.present();
+        console.log(error);
       });
     }
   }
