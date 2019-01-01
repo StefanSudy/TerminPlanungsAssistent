@@ -22,8 +22,31 @@ export class LoginPage {
 
   ionViewWillLoad() {
     if(localStorage.getItem('access_token')) {
-      this.navCtrl.setRoot(HomePage);
-      this.navCtrl.popToRoot();
+      this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id'))
+      .subscribe(response => {
+        this.appointmentProvider.setAppointments(response);
+        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.popToRoot();
+      }, error => {
+        let alert = this.alertCtrl.create({
+          title: 'Fehler beim Verbinden zur Cloud',
+          message: 'Klicken Sie ok um offline einzusteigen.',
+          buttons: [
+            {
+              text: 'Abbrechen',
+              role: 'cancel',
+            },
+            {
+            text: 'Ok',
+            handler: () => {
+                this.navCtrl.setRoot(HomePage);
+                this.navCtrl.popToRoot();
+              }
+            }
+          ]
+        });
+        alert.present();
+      });
     }
   }
 

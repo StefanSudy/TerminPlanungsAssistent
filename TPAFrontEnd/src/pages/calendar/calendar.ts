@@ -5,6 +5,7 @@ import moment from 'moment';
 //Api-Services
 import { APIService } from '../../providers/apiservice/apiservice';
 import { Appointment } from '../../models/appointment';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 //import { User } from '../../models/user';
 /**
  * Generated class for the CalendarPage page.
@@ -30,7 +31,7 @@ export class CalendarPage {
     locale: 'de-AT'
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, public restProvider: APIService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, public restProvider: APIService, public appointmentProvider: AppointmentProvider) {
   }
 
   addEvent() {
@@ -38,6 +39,7 @@ export class CalendarPage {
     modal.present();
     modal.onDidDismiss(answer => {
       if (answer) {
+        this.appointmentProvider.addAppointment(answer);
         this.currentItems.push(answer);
         let events = this.eventSource;
         let endTime = moment(answer.dateDue).add(answer.duration, 'minutes').format();
@@ -62,9 +64,10 @@ export class CalendarPage {
   }
  
   onEventSelected(event) {
-    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
-      this.currentItems=currentItems;
-    });    
+    this.currentItems = this.appointmentProvider.getAppointments();
+    // this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id')).subscribe((currentItems : Appointment[]) => {
+    //   this.currentItems=currentItems;
+    // });    
     for(let item of this.currentItems){
       if(item.id == event.id && event.id != null){ //Nur das gerade ausgewählte Element und wenn es in der Datenbank gefunden wurde.
         this.navCtrl.push(ViewItemPage, {
@@ -80,11 +83,12 @@ export class CalendarPage {
   }
 
   ionViewWillEnter() {
-    this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id'))
-    .subscribe((currentItems : Appointment[]) => {
-      this.currentItems=currentItems;
+    this.currentItems = this.appointmentProvider.getAppointments();
+    // this.restProvider.GetAppointmentsForUser(+localStorage.getItem('user_id'))
+    // .subscribe((currentItems : Appointment[]) => {
+    //   this.currentItems=currentItems;
 
-    });    
+    // });    
   }
 
   ionViewDidEnter() {

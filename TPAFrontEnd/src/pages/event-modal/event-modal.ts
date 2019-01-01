@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import * as moment from 'moment';
 import { Appointment } from '../../models/appointment';
 import { APIService } from '../../providers/apiservice/apiservice';
+import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
  
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ import { APIService } from '../../providers/apiservice/apiservice';
 export class EventModalPage {
   newItem: any;
  
-  constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController, private restService: APIService) {
+  constructor(public navCtrl: NavController, private navParams: NavParams, public viewCtrl: ViewController, private restService: APIService, private appointmentProvider: AppointmentProvider) {
     this.newItem = new Appointment;
     let preselectedDate = moment(this.navParams.get('selectedDay')).format();
     this.newItem.dateDue = preselectedDate;
@@ -29,6 +30,7 @@ export class EventModalPage {
     this.restService.PostAppointment(this.newItem).subscribe(
       (createdItem) => {
         this.newItem = createdItem;
+        this.appointmentProvider.addAppointment(this.newItem);
       }
     );
     this.viewCtrl.dismiss(this.newItem);
