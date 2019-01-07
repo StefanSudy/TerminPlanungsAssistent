@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable} from 'rxjs/Observable';
 import { Appointment } from '../../models/appointment';
 import { User } from '../../models/user';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { _throw } from 'rxjs/observable/throw';
 
 @Injectable()
