@@ -19,3 +19,15 @@ ion-card-header.card-header-md{
 ion-card-header.card-header-ios{
     color: white;
 }
+
+ion-content{
+    background-image: url("../../assets/imgs/red1.jpg");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.item.item-list{
+    background-color: black ;
+    opacity: 0.6;
+}
