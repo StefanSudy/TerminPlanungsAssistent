@@ -1,6 +1,21 @@
 page-register {
-    ion-title *{
-        margin-top: 30vh;
-        margin-bottom: 5vh;
-      }
+
+    body {
+        background-image: url("../../assets/imgs/login.jpg");
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .content{
+        margin-top: 50%;
+        background-color: transparent;
+    }
+
+    .item.item-input {
+        background-color: black ;
+        opacity: 0.6;
+    
+    }
+
 }
