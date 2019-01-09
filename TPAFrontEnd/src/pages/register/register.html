@@ -1,25 +1,25 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Registrierung</ion-title>
   </ion-navbar>
 </ion-header>
 
-
-<ion-content padding class="content">
+<ion-content center padding text-center class="body">
+    <img src="../../assets/imgs/tpa-logo.png" width="160" alt="logo TPA">
+    <ion-title>Registrieren</ion-title>
     <form (ngSubmit)="register(email, password, passwordRepeat)">
-        <ion-item class="loginItem">
+        <ion-item>
             <ion-label stacked>E-Mail Adresse</ion-label>
-            <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event) class="transparent"></ion-input>
+            <ion-input class="transparent" type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event)"></ion-input>
         </ion-item>
-        <ion-item class="loginItem">
+        <ion-item>
             <ion-label stacked>Password</ion-label>
             <ion-input type="text" [(ngModel)]="password" name="password" type="password" (focusout)="validatePassword(password, $event)"></ion-input>
         </ion-item>
-        <ion-item class="loginItem">
+        <ion-item style="padding-bottom: 10px">
             <ion-label stacked>Password wiederholen</ion-label>
             <ion-input type="text" [(ngModel)]="passwordRepeat" name="passwordRepeat" type="password" (focusout)="validatePasswordRepeat(passwordRepeat, password, $event)"></ion-input>
         </ion-item>
         <button ion-button type="submit" block>Registrieren</button>
     </form>
+    <p style="border-left: 6px solid red; font-size: 1.6rem" text-start>Feld ungültig</p>
 </ion-content>
-</body>

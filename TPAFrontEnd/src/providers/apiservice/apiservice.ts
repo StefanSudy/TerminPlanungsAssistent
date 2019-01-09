@@ -10,7 +10,7 @@ import { _throw } from 'rxjs/observable/throw';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://192.168.1.206:443/api";
+  baseUrl:string = "https://localhost:5001/api";
 
   constructor(private httpClient: HttpClient) { }
 

@@ -6,12 +6,12 @@
             <ion-label stacked>E-Mail Adresse</ion-label>
             <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event)"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item style="padding-bottom: 10px">
             <ion-label stacked>Password</ion-label>
             <ion-input type="text" [(ngModel)]="password" name="password" type="password"></ion-input>
         </ion-item>
-        <p style="border-left: 6px solid red; font-size: 1.6rem" text-start>Feld ungültig</p>
         <button ion-button type="submit" full>Login</button>
     </form>
     <button ion-button color="light" full (click)="goToRegister(email, password)">Registrieren</button>
+    <p style="border-left: 6px solid red; font-size: 1.6rem" text-start>Feld ungültig</p>
 </ion-content>

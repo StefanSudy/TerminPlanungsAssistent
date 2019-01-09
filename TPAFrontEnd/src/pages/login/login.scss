@@ -12,9 +12,10 @@ page-login {
     background-repeat: no-repeat;
     background-size: cover;
   } 
-
   .item.item-input {
-    background-color: black ;
-    opacity: 0.6;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .item {
+    padding-right: 15px;
   }
 }

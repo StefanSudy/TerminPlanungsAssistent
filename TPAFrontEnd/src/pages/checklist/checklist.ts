@@ -17,7 +17,7 @@ export class ChecklistPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private appointmentProvider: AppointmentProvider) {
   }
 
-  ionViewWillLoad() {
+  ionViewWillEnter() {
     var items = this.appointmentProvider.getAppointments();
     items.forEach(item => {
       this.currentItems.push({item: item, expanded: false});
