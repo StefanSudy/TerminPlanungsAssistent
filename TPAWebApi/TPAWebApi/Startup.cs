@@ -86,7 +86,6 @@ namespace TPAWebApi
                             var user = userContext.Users.Get(userId);
                             if (user == null)
                             {
-                                // return unauthorized if user no longer exists
                                 context.Fail("Unauthorized");
                             }
                             return Task.CompletedTask;

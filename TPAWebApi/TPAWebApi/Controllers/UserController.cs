@@ -46,14 +46,12 @@ namespace TPAWebApi.Controllers
 
             var user = _unitOfWork.Users.Get(id);
 
-            //var _user = _mapper.Map<User, UserDto>(user);
             var _user = new UserDto
             {
                 Id = user.Id,
                 EMail = user.EMail,
                 Active = user.Active,
             };
-
             return Ok(_user);
         }
 

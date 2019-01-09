@@ -10,7 +10,7 @@ import { _throw } from 'rxjs/observable/throw';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://localhost:5001/api";
+  baseUrl:string = "https://192.168.1.206:443/api";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -48,18 +48,24 @@ export class APIService {
   //User calls
   public PostValidateUser(eMail: string, password: string, active: boolean){
     return this.httpClient.post(this.baseUrl + '/user/authenticate/', { eMail, password, active })
-    .map(response => {
+    .pipe(map((response: User) => {
       return new User(response);
-    })
-    .catch((error: any) => Observable.throw(this.errorHandler(error)));;
+    }));
+    // .map(response => {
+    //   return new User(response);
+    // })
+    // .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
   public PostUser(user: User)
   {
     return this.httpClient.post(this.baseUrl + '/user/register/', user)
-    .map(response => {
+    .pipe(map(response => {
       return new User(response);
-    })
-    .catch((error: any) => Observable.throw(this.errorHandler(error)));
+    }));
+    // .map(response => {
+    //   return new User(response);
+    // })
+    // .catch((error: any) => Observable.throw(this.errorHandler(error)));
   }
 
   errorHandler(error): void {
