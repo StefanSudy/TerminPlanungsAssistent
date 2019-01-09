@@ -1,0 +1,14 @@
+page-list {
+    ion-content *{
+        background-image: url("../../assets/imgs/red1.jpg");
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .item.item-input {
+        background-color: black ;
+        opacity: 0.6;
+    
+    }
+}

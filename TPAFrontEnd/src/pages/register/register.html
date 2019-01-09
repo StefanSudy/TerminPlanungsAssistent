@@ -1,16 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title class="loginPage" padding center text-center>TPA</ion-title>
+    <ion-title>Registrierung</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding center text-center>
-    <h3>Registrieren</h3>
+<ion-content padding class="content">
     <form (ngSubmit)="register(email, password, passwordRepeat)">
         <ion-item class="loginItem">
             <ion-label stacked>E-Mail Adresse</ion-label>
-            <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event)"></ion-input>
+            <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event) class="transparent"></ion-input>
         </ion-item>
         <ion-item class="loginItem">
             <ion-label stacked>Password</ion-label>
@@ -23,3 +22,4 @@
         <button ion-button type="submit" block>Registrieren</button>
     </form>
 </ion-content>
+</body>

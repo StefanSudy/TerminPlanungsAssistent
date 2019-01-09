@@ -7,6 +7,7 @@
   </ion-navbar>
 </ion-header>
 
+<body>
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of currentItems" (click)="expandItem(item)">
@@ -22,3 +23,4 @@
 <ion-footer>
   <button ion-button block (click)="goToNewForm()">Neuen Eintrag erstellen</button>
 </ion-footer>
+</body>

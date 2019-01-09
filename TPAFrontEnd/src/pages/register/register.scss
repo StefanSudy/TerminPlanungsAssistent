@@ -1,8 +1,21 @@
-ion-item.loginItem {
-    background-color: #191919;
-}
+page-register {
 
-ion-title.loginPage {
-    margin-top: 15vh; 
-    margin-bottom: 5vh;
+    body {
+        background-image: url("../../assets/imgs/red1.jpg");
+        background-color: transparent;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .content{
+        margin-top: 50%;
+        background-color: transparent;
+    }
+
+    .item.item-input {
+        background-color: black ;
+        opacity: 0.6;
+    
+    }
+
 }

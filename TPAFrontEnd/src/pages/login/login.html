@@ -1,22 +1,17 @@
-<ion-header>
-  <ion-navbar padding center text-center>
-    <ion-title class="loginPage">TPA</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding center text-center>
-  <h3>Login</h3>
-  <form style="background-color: #191919;" (ngSubmit)="goToHome(email, password)">
-      <ion-item class="loginItem">
-          <ion-label stacked>E-Mail Adresse</ion-label>
-          <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event)"></ion-input>
-      </ion-item>
-      <ion-item class="loginItem">
-          <ion-label stacked>Password</ion-label>
-          <ion-input type="text" [(ngModel)]="password" name="password" type="password"></ion-input>
-      </ion-item>
-      <p style="border-left: 6px solid red; font-size: 1.6rem" text-start>Feld ungültig</p>
-      <button ion-button type="submit" full>Login</button>
+<ion-content class="body" padding center text-center>
+    <img src="../../assets/imgs/tpa-logo.png" width="160" alt="logo TPA">
+    <ion-title>Login</ion-title>
+    <form (ngSubmit)="goToHome(email, password)">
+        <ion-item>
+            <ion-label stacked>E-Mail Adresse</ion-label>
+            <ion-input type="text" [(ngModel)]="email" name="email" (focusout)="validateMail(email, $event)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input type="text" [(ngModel)]="password" name="password" type="password"></ion-input>
+        </ion-item>
+        <p style="border-left: 6px solid red; font-size: 1.6rem" text-start>Feld ungültig</p>
+        <button ion-button type="submit" full>Login</button>
     </form>
     <button ion-button color="light" full (click)="goToRegister(email, password)">Registrieren</button>
 </ion-content>
