@@ -8,22 +8,17 @@
 </ion-header>
 
 <body>
-<ion-content>
+<ion-content padding>
   <ion-list>
-    <ion-list-header>Header</ion-list-header>
-    <ion-item-group reorder="true">
-    <button ion-item *ngFor="let item of currentItems" (click)="itemTapped(item)">
-      <ion-label >{{item.entryName}}</ion-label>
-      <div class="item-note" item-end>{{item.dateDue | date: 'd/M/yy, HH:mm' }}, Aktiv</div> 
-      <!--<div class="item-note" item-content>
-        {{item.entryText}}
-      </div>-->
-    </button>
-  </ion-item-group>
+    <ion-item *ngFor="let item of currentItems" (click)="expandItem(item)">
+      <h1 style="font-size: 30px">{{item.item.entryName}}</h1>
+      <button ion-button block style="width: 30%; height: 50px" (click)="goToItemView(item)" item-right>Details</button>
+      <expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
+          <p>{{item.item.dateDue | date: 'd/M/yy, HH:mm' }}</p>
+          <h3 text-wrap>{{item.item.entryText}}</h3>
+      </expandable>
+    </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.entryName}}</b>
-  </div>
 </ion-content>
 <ion-footer>
   <button ion-button block (click)="goToNewForm()">Neuen Eintrag erstellen</button>

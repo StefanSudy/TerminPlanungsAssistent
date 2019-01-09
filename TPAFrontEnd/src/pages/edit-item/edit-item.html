@@ -18,6 +18,10 @@
       <ion-label stacked>Datum</ion-label>
       <ion-datetime displayFormat="DD/MMM/YYYY HH:mm" [(ngModel)]="currentItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
     </ion-item>
+    <ion-item>
+        <ion-label stacked>Dauer</ion-label>
+        <ion-input type="number" [(ngModel)]="currentItem.duration" name="currentItem.duration" clearInput=true></ion-input>
+      </ion-item>
     <p>* Pflichtfeld</p>
     <button ion-button type="submit" block>Speichern</button>
   </form>

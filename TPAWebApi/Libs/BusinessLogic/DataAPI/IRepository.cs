@@ -8,8 +8,7 @@ namespace BusinessLogic.DataAPI
 {
     public interface IRepository<TModel>
     {
-        void Add(TModel model);
-        void Delete(TModel model);
+        void Create(TModel model);
         void DeleteById(int id);
         TModel Get(int id);
         void UpdateById(int id, TModel model);

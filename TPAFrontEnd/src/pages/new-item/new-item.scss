@@ -7,8 +7,7 @@ page-new-item {
     }
 
 
-    .item.item-input{
-        background-color: black ;
-        opacity: 0.6;
+    .item.item-input, .item.item-datetime{
+        background-color: rgba(0, 0, 0, 0.6);
     }
 }

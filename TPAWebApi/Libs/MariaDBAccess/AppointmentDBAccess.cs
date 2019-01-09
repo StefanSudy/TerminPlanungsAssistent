@@ -17,16 +17,10 @@ namespace MariaDBAccess
             _context = context;
         }
 
-        public void Add(Appointment model)
+        public void Create(Appointment user)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.Appointment.Add(model);
-        }
-
-        public void Delete(Appointment model)
-        {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            _context.Appointment.Remove(model);
+            if (user == null) throw new ArgumentNullException(nameof(user));
+            _context.Appointment.Add(user);
         }
 
         public void DeleteById(int id)

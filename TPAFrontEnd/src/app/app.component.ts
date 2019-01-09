@@ -7,7 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
 import { SettingsPage } from '../pages/settings/settings';
 import { CalendarPage } from '../pages/calendar/calendar';
-import { Login } from '../pages/login/login';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,36 +15,35 @@ import { Login } from '../pages/login/login';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Hauptmenü', component: HomePage, icon: 'home'},
       { title: 'Checkliste', component: ChecklistPage, icon: 'checkbox-outline'},
       { title: 'Kalender', component: CalendarPage, icon: 'calendar'},
-      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'},
-      { title: 'Logout', component: Login, icon: 'exit'}
+      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'}
     ];
 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.nav.setRoot(LoginPage);
   }
 }

@@ -1,6 +1,8 @@
 {
   "name": "tpa",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular",
   "id": "bc7114c0"
 }

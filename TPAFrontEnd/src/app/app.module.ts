@@ -10,20 +10,21 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { ViewItemPage } from '../pages/view-item/view-item';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { NewItemPage } from '../pages/new-item/new-item';
-import { Login } from '../pages/login/login';
+import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
+import { ExpandableComponent } from '../components/expandable/expandable';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-import { UserProvider } from '../providers/userprovider/userprovider';
 //Importieren des Kalendermodules
 import { NgCalendarModule  } from 'ionic2-calendar';
 //Um die Sprache für den Kalender zu ändern
 import {LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDEAT from '@angular/common/locales/de-AT';
+import { AppointmentProvider } from '../providers/appointmentprovider/appointmentprovider';
 
 registerLocaleData(localeDEAT);
 //Sprache Kalender Ende
@@ -38,8 +39,9 @@ registerLocaleData(localeDEAT);
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    Login,
-    RegisterPage
+    LoginPage,
+    RegisterPage,
+    ExpandableComponent,
   ],
   imports: [
     NgCalendarModule,
@@ -57,7 +59,7 @@ registerLocaleData(localeDEAT);
     ViewItemPage,
     EditItemPage,
     NewItemPage,
-    Login,
+    LoginPage,
     RegisterPage
   ],
   providers: [
@@ -65,8 +67,8 @@ registerLocaleData(localeDEAT);
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,
-    UserProvider,
-    { provide: LOCALE_ID, useValue: 'de-AT' },//Es wird das deutsch Sprachpaket geladen.
+    { provide: LOCALE_ID, useValue: 'de-AT' }, //Es wird das deutsch Sprachpaket geladen.
+    AppointmentProvider,
   
   ]
 })
