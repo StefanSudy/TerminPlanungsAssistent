@@ -8,14 +8,16 @@ page-login {
   }
   .body {
     background-image: url("../../assets/imgs/red1.jpg");
-    background-color: black;
+    background-color: darkslategrey;
     background-repeat: no-repeat;
     background-size: cover;
   } 
-  .item.item-input {
-    background-color: rgba(0, 0, 0, 0.6);
-  }
+
   .item {
     padding-right: 15px;
+  }
+
+  .item.item-input {
+    background-color: rgba(0, 0, 0, 0.6);
   }
 }

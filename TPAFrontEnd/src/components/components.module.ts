@@ -3,6 +3,6 @@ import { ExpandableComponent } from './expandable/expandable';
 @NgModule({
 	declarations: [ExpandableComponent],
 	imports: [],
-	exports: [ExpandableComponent]
+	exports: [ ExpandableComponent ] 
 })
 export class ComponentsModule {}

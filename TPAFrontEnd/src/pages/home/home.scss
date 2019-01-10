@@ -9,6 +9,14 @@ h3{
     color: white;
 }
 
+.titleicon {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    text-align:end;
+}
+
 ion-card{
     border-top: 5px solid map-get($colors, primary);
 }

@@ -37,7 +37,7 @@ export class ViewItemPage {
         {
           text: 'Löschen',
           handler: () => {
-            this.restProvider.DeleteAppointment(currentItem.id, +localStorage.getItem('user_id'))
+            this.restProvider.DeleteAppointment(currentItem.id)
             .subscribe(
               () => {
                 this.appointmentProvider.deleteAppointment(currentItem);

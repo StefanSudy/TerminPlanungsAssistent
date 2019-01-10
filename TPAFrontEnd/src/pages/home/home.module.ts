@@ -16,8 +16,5 @@ import { APIService } from '../../providers/apiservice/apiservice';
   providers: [
     APIService
   ],
-  exports: [
-    APIService
-  ]
 })
-export class ListMasterPageModule { }
+export class HomePageModule { }

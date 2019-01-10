@@ -4,7 +4,6 @@ import { ViewItemPage } from '../view-item/view-item';
 import moment from 'moment';
 //Api-Services
 import { APIService } from '../../providers/apiservice/apiservice';
-import { Appointment } from '../../models/appointment';
 import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
 //import { User } from '../../models/user';
 /**

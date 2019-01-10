@@ -6,17 +6,16 @@ import { User } from '../../models/user';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
-import { _throw } from 'rxjs/observable/throw';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://localhost:5001/api";
+  baseUrl:string = "https://192.168.1.206:443/api";
 
   constructor(private httpClient: HttpClient) { }
 
   //Appointments Calls
-  public GetAppointmentsForUser(userId: number): Observable<Appointment[]> {
-    return this.httpClient.get(this.baseUrl + '/appointments/' + userId, { 
+  public GetAppointmentsForUser(): Observable<Appointment[]> {
+    return this.httpClient.get(this.baseUrl + '/appointments/' + localStorage.getItem('user_id'), { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
     }).pipe(map((appointments: Appointment[]) => {
       return appointments.map((appointment) => new Appointment(appointment));
@@ -39,8 +38,8 @@ export class APIService {
     })
     .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
-  public DeleteAppointment(id: number, userId: number) {
-    return this.httpClient.delete(this.baseUrl + '/appointments/' + id + '/' + userId, { 
+  public DeleteAppointment(id: number) {
+    return this.httpClient.delete(this.baseUrl + '/appointments/' + id + '/' + localStorage.getItem('user_id'), { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
     });
   }
@@ -66,6 +65,13 @@ export class APIService {
     //   return new User(response);
     // })
     // .catch((error: any) => Observable.throw(this.errorHandler(error)));
+  }
+
+  public PutUser(user: User)
+  {
+    return this.httpClient.put(this.baseUrl + '/user/' + localStorage.getItem('user_id'), user, {
+      headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
+    });
   }
 
   errorHandler(error): void {

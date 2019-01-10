@@ -41,7 +41,7 @@ export class RegisterPage {
   }
   validatePassword(pwd: string, event?): boolean {
     if(pwd){
-      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;   
+      var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;   
       if (!regex.test(pwd)) {
         console.log("Passwort ungültig: Mindestens 1 Buchstabe, eine Zahl und acht Zeichen lang.");
         if (event) {

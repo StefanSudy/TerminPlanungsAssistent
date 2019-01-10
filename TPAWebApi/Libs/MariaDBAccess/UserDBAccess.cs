@@ -71,13 +71,16 @@ namespace MariaDBAccess
 
             var _user = Get(id);
 
-            if (user.EMail != _user.EMail)
+            if (user.EMail != _user.EMail && !string.IsNullOrEmpty(user.EMail))
             {
                 if (GetByMail(user.EMail) != null)
                     throw new ArgumentException($"Username {user.EMail} is already taken!");
             }
 
-            _user.EMail = user.EMail;
+            if (!string.IsNullOrWhiteSpace(user.EMail))
+            {
+                _user.EMail = user.EMail;
+            }
 
             if (!string.IsNullOrWhiteSpace(password))
             {

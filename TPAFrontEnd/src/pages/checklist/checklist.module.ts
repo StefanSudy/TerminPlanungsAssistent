@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ExpandableComponent } from '../../components/expandable/expandable';
+import { ComponentsModule } from '../../components/components.module';
 import { ChecklistPage } from './checklist';
 
 @NgModule({
@@ -8,11 +8,11 @@ import { ChecklistPage } from './checklist';
     ChecklistPage,
   ],
   imports: [
-    ExpandableComponent,
+    ComponentsModule,
     IonicPageModule.forChild(ChecklistPage),
   ],
   exports: [
     ChecklistPage
   ]
 })
-export class MyPageModule {}
+export class ChecklistPageModule {}

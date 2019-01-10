@@ -101,7 +101,7 @@ namespace TPAWebApi.Controllers
             {
                 _unitOfWork.Users.Create(user, userDto.Password);
                 _unitOfWork.Save();
-                return Ok(user);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -115,10 +115,9 @@ namespace TPAWebApi.Controllers
             if (!userAuthorized(Request.Headers["Authorization"], id))
                 return Unauthorized();
 
-            //var user = _mapper.Map<User>(userDto);
             var user = new User
             {
-                Active = userDto.Active,
+                Active = true,
                 EMail = userDto.EMail,
                 Id = id
             };
@@ -128,7 +127,7 @@ namespace TPAWebApi.Controllers
             {
                 _unitOfWork.Users.UpdateById(id, user, userDto.Password);
                 _unitOfWork.Save();
-                return Ok(user);
+                return Ok();
             }
             catch (Exception ex)
             {

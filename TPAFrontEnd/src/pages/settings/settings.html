@@ -1,16 +1,29 @@
 <ion-header>
     <ion-navbar>
-      <ion-title>Usereinstellungen</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title style="display:inline-block">Usereinstellungen</ion-title>
+      <div class="titleicon">
+          <img src="../../assets/imgs/tpa-logo-white.png" height="50px" />
+     </div>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
-    <form (ngSubmit)="saveForm(currentItem)">
+    <form (ngSubmit)="saveForm(eMail, pwdNew)">
       <ion-item>
-        <ion-label stacked>EMail</ion-label>
-        <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName" maxLength="30"></ion-input>
+        <ion-label stacked>Neue EMail</ion-label>
+        <ion-input type="text" [(ngModel)]="eMail" name="eMail" maxLength="30" (focusout)="validateMail(eMail, $event)"></ion-input>
       </ion-item>
-      <p>* Pflichtfeld</p>
+      <ion-item>
+          <ion-label stacked>Neues Passwort</ion-label>
+          <ion-input type="password" [(ngModel)]="pwdNew" name="pwdNew" maxLength="30" (focusout)="validateNewPassword(pwdNew, $event)"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Neues Passwort wiederholen</ion-label>
+            <ion-input type="password" [(ngModel)]="pwdRepeat" name="pwdRepeat" maxLength="30" (focusout)="validatePasswordRepeat(pwdRepeat, pwdNew, $event)"></ion-input>
+          </ion-item>
       <button ion-button type="submit" block>Speichern</button>
     </form>
   </ion-content>

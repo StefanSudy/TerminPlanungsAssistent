@@ -20,6 +20,8 @@ export class ChecklistPage {
   ionViewWillEnter() {
     var items = this.appointmentProvider.getAppointments();
     items.forEach(item => {
+      if (item.dateDue == new Date(-8640000000000000))
+        item.dateDue = null;
       this.currentItems.push({item: item, expanded: false});
     });
   }

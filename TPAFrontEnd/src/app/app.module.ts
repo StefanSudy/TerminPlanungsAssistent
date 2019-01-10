@@ -12,19 +12,26 @@ import { EditItemPage } from '../pages/edit-item/edit-item';
 import { NewItemPage } from '../pages/new-item/new-item';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { ExpandableComponent } from '../components/expandable/expandable';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { APIService } from '../providers/apiservice/apiservice';
 import { HttpClientModule } from '@angular/common/http';
-//Importieren des Kalendermodules
-import { NgCalendarModule  } from 'ionic2-calendar';
+
 //Um die Sprache für den Kalender zu ändern
 import {LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeDEAT from '@angular/common/locales/de-AT';
 import { AppointmentProvider } from '../providers/appointmentprovider/appointmentprovider';
+import { CalendarPageModule } from '../pages/calendar/calendar.module';
+import { ComponentsModule } from '../components/components.module';
+import { ChecklistPageModule } from '../pages/checklist/checklist.module';
+import { EditItemPageModule } from '../pages/edit-item/edit-item.module';
+import { ViewItemPageModule } from '../pages/view-item/view-item.module';
+import { SettingsPageModule } from '../pages/settings/settings.module';
+import { RegisterPageModule } from '../pages/register/register.module';
+import { NewItemPageModule } from '../pages/new-item/new-item.module';
+import { HomePageModule } from '../pages/home/home.module';
 
 registerLocaleData(localeDEAT);
 //Sprache Kalender Ende
@@ -32,22 +39,30 @@ registerLocaleData(localeDEAT);
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ChecklistPage,
-    SettingsPage,
-    CalendarPage,
-    ViewItemPage,
-    EditItemPage,
-    NewItemPage,
+    //HomePage,
+    //ChecklistPage,
+    //SettingsPage,
+    //CalendarPage,
+    //ViewItemPage,
+    //EditItemPage,
+    //NewItemPage,
     LoginPage,
-    RegisterPage,
-    ExpandableComponent,
+    //RegisterPage,
+    //ExpandableComponent,
   ],
   imports: [
-    NgCalendarModule,
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    CalendarPageModule,
+    ChecklistPageModule,
+    ComponentsModule,
+    EditItemPageModule,
+    ViewItemPageModule,
+    SettingsPageModule,
+    RegisterPageModule,
+    NewItemPageModule,
+    HomePageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
