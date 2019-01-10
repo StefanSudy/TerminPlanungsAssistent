@@ -9,4 +9,14 @@ page-calendar {
     div {
         background-color: rgba(0, 0, 0, 0.2);
     }
+    .monthview-selected {
+		background-color:#5aad02 !important;
+		color:rgb(255, 255, 255) !important;
+		font-weight:bold !important;
+    }
+    .monthview-current {
+		background-color: map-get($colors, primary) !important;
+		color:rgb(0, 0, 0) !important;
+		font-weight:bold !important;
+    }
 }
