@@ -1,9 +1,17 @@
 <ion-header>
   <ion-navbar>
-      <ion-title style="display:inline-block">Eintrag erstellen</ion-title>
-      <div class="titleicon">
-          <img src="../../assets/imgs/tpa-logo-white.png" height="50px" />
-     </div>
+     <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-title>Eintrag erstellen</ion-title>
+          </ion-col>
+          <ion-col>
+            <div class="titleicon">
+              <img src="../../assets/imgs/tpa-logo-white.png" height="50px" />
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-navbar>
   </ion-header>
   
@@ -21,7 +29,7 @@
         <ion-label stacked>Datum</ion-label>
         <ion-datetime displayFormat="DD/MMM/YYYY HH:mm" [(ngModel)]="newItem.dateDue" name="dateDue" (ionCancel)="emptyDate()"></ion-datetime>
       </ion-item>
-      <ion-item>
+      <ion-item style="padding-bottom: 10px">
         <ion-label stacked>Dauer</ion-label>
         <ion-input type="number" [(ngModel)]="newItem.duration" name="duration" clearInput=true></ion-input>
       </ion-item>

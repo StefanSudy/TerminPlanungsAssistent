@@ -1,9 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <ion-title style="display:inline-block">{{currentItem.entryName}}</ion-title>
-    <div class="titleicon">
-        <img src="../../assets/imgs/tpa-logo-white.png" height="50px" />
-   </div> 
+   <ion-grid>
+      <ion-row>
+        <ion-col>
+            <ion-title>{{currentItem.entryName}}</ion-title>
+        </ion-col>
+        <ion-col>
+          <div class="titleicon">
+              <img src="../../assets/imgs/tpa-logo-white.png" height="50px" />
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 </ion-header>
 
