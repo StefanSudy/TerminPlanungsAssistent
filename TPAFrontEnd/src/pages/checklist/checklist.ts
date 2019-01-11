@@ -34,6 +34,10 @@ export class ChecklistPage {
     });
   }
 
+  ionViewWillLeave() {
+    this.currentItems = [];
+  }
+
   goToItemView(item) {
     this.navCtrl.push(ViewItemPage, {
       currentItem: item.item

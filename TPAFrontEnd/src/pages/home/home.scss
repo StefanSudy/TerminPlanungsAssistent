@@ -18,13 +18,10 @@ h3{
 }
 
 ion-card{
-    border-top: 5px solid map-get($colors, primary);
+    border-top: 4px solid map-get($colors, primary);
 }
 
-ion-card-header.card-header-md{
-    color: white;
-}
-ion-card-header.card-header-ios{
+.card-header-md, .card-header-ios{
     color: white;
 }
 
@@ -35,6 +32,10 @@ ion-content{
     background-size: cover;
 }
 
-.ion-card{
-    background-color: rgba(0, 0, 0, 0.6) ;
+.card-md, .card-ios{
+    background-color: rgba(0, 0, 0, 0.6);
+
+}
+.item-md, .item-ios {
+    background-color: transparent;
 }

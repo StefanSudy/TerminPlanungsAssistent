@@ -26,7 +26,7 @@ export class MyApp {
       { title: 'Hauptmenü', component: HomePage, icon: 'home'},
       { title: 'Checkliste', component: ChecklistPage, icon: 'checkbox-outline'},
       { title: 'Kalender', component: CalendarPage, icon: 'calendar'},
-      { title: 'Einstellungen', component: SettingsPage, icon: 'settings'}
+      { title: 'Userdaten ändern', component: SettingsPage, icon: 'person'}
     ];
 
   }
