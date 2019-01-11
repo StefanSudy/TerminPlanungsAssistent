@@ -5,11 +5,10 @@ page-event-modal {
         background-repeat: no-repeat;
         background-size: cover;
     }
-
-
-    .item.item-input{
-        background-color: black ;
-        opacity: 0.6;
+    .item-input, .date{
+        background-color: rgba(0, 0, 0, 0.6) ;
     }
-
+    .item-md {
+        padding-right: 15px;
+    }
 }
