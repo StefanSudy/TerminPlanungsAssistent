@@ -3,7 +3,7 @@
    <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-title>{{currentItem.entryName}}</ion-title>
+            <ion-title>Eintrag ändern</ion-title>
         </ion-col>
         <ion-col>
           <div class="titleicon">
@@ -19,7 +19,7 @@
   <form (ngSubmit)="saveForm(currentItem)">
     <ion-item>
       <ion-label stacked>Name *</ion-label>
-      <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName" maxLength="30"></ion-input>
+      <ion-input type="text" [(ngModel)]="currentItem.entryName" name="entryName" maxLength="255"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Beschreibung</ion-label>

@@ -24,3 +24,8 @@ ion-content{
     bottom: -12px;
     text-align:end;
 }
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

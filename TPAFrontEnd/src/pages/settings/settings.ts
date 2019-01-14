@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { User } from '../../models/user';
 
@@ -10,11 +10,8 @@ import { User } from '../../models/user';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
-  // eMail: string;
-  // pwdNew: string;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService, private alertCtrl: AlertController) {
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -27,6 +24,11 @@ export class SettingsPage {
       password: pwdNew,
       active: true
     });
+    let loader = this.loadingCtrl.create({
+      spinner: 'crescent',
+      content: 'Wird gespeichert...'
+    })
+    loader.present();
     this.restService.PutUser(user).subscribe(
       () =>
       {
@@ -56,6 +58,7 @@ export class SettingsPage {
         alert.present();
       }
     );
+    loader.dismiss();
   }
   validateNewPassword(pwdNew: string, event?): boolean {
     if(pwdNew){

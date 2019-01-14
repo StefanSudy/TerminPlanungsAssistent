@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController} from 'ionic-angular';
 import { Appointment } from '../../models/appointment';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
@@ -11,7 +11,7 @@ import { AppointmentProvider } from '../../providers/appointmentprovider/appoint
 })
 export class NewItemPage {
   newItem: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService, private appointmentProvider: AppointmentProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: APIService, private appointmentProvider: AppointmentProvider, private loadingCtrl: LoadingController) {
     this.newItem = new Appointment;
   }
   saveForm(newItem: Appointment) {
@@ -21,9 +21,15 @@ export class NewItemPage {
       newItem.dateCreated = new Date();
       newItem.userID = +localStorage.getItem('user_id');
       this.newItem = newItem;
+      let loader = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: 'Wird gespeichert...'
+      })
+      loader.present();
       this.restService.PostAppointment(newItem).subscribe(
         (createdItem) => {
           this.appointmentProvider.addAppointment(createdItem);
+          loader.dismiss();
           this.navCtrl.pop();
         }
       );

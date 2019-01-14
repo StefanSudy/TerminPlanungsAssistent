@@ -8,7 +8,6 @@ namespace TPAWebApi.ModelsDto
         public int Id { get; set; }
         [Required]
         public string EMail { get; set; }
-        [Required]
         public string Password { get; set; }
         [Required]
         public bool Active { get; set; }

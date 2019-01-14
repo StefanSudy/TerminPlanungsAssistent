@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { User } from '../../models/user';
@@ -13,13 +13,9 @@ export class RegisterPage {
   email: string;
   password: string;  
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restProvider: APIService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restProvider: APIService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     this.email = this.navParams.get('email');
     this.password = this.navParams.get('password');
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
   }
 
   validateMail(email: string, event?): boolean {
@@ -82,6 +78,11 @@ export class RegisterPage {
         password: pwd,
         active: true
       });
+      let loader = this.loadingCtrl.create({
+        spinner: 'crescent',
+        content: 'User wird erstellt...'
+      })
+      loader.present();
       this.restProvider.PostUser(user).subscribe(
         response => {
           this.restProvider.PostValidateUser(email, pwd, true).subscribe(
@@ -89,9 +90,26 @@ export class RegisterPage {
               localStorage.setItem('user_id', response.id.toString());
               localStorage.setItem('access_token', response.token);
               localStorage.setItem('appointments', '[]');
+              loader.dismiss();
               this.navCtrl.setRoot(HomePage);
               this.navCtrl.popToRoot();
             });
+        }, error => {
+          console.log(error);
+          let alert = this.alertCtrl.create({
+            title: 'Fehler bei der Registrierung',
+            message: 'Die von Ihnene angegebene E-Mail ist bereits in Verwendung.',
+            buttons: [
+              {
+              text: 'Ok',
+              role: 'cancel',
+              handler: () => {
+                  loader.dismiss();
+                }
+              }
+            ]
+          });
+          alert.present();
         });
     }
   }

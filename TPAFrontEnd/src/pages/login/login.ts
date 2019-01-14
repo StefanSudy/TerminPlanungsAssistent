@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, MenuController} from 'ionic-angular';
+import { NavController, AlertController, MenuController, Loading, LoadingController} from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
@@ -14,21 +14,27 @@ import { AppointmentProvider } from '../../providers/appointmentprovider/appoint
 export class LoginPage {
   
   user: User;
-  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController, public menu: MenuController, private appointmentProvider: AppointmentProvider) {
+  constructor(public navCtrl: NavController, private restProvider: APIService, private alertCtrl: AlertController, public menu: MenuController, private appointmentProvider: AppointmentProvider, private loadingCtrl: LoadingController) {
     this.menu.enable(false);
   }
 
   ionViewWillLoad() {
     if(localStorage.getItem('access_token')) {
+      let loading = this.loadingCtrl.create({
+        content: "Daten werden geladen",
+        spinner: 'crescent'
+      });
+      loading.present();
       this.restProvider.GetAppointmentsForUser()
       .subscribe(response => {
         this.appointmentProvider.setAppointments(response);
+        loading.dismiss();
         this.navCtrl.setRoot(HomePage);
         this.navCtrl.popToRoot();
       }, error => {
         let alert = this.alertCtrl.create({
           title: 'Fehler beim Verbinden zur Cloud',
-          message: 'Klicken Sie ok um offline einzusteigen.',
+          message: 'Klicken Sie ok um offline einzusteigen. (Änderungen werden nicht gespeichert!)',
           buttons: [
             {
               text: 'Abbrechen',
@@ -37,6 +43,7 @@ export class LoginPage {
             {
             text: 'Ok',
             handler: () => {
+                loading.dismiss();
                 this.navCtrl.setRoot(HomePage);
                 this.navCtrl.popToRoot();
               }
@@ -51,7 +58,11 @@ export class LoginPage {
 
   goToHome(email: string, password: string) {
     if(this.validateMail(email) && password) {
-
+      let loading = this.loadingCtrl.create({
+        content: "Daten werden geladen",
+        spinner: 'crescent'
+      });
+      loading.present();
       this.restProvider.PostValidateUser(email, password, true).subscribe(
         response => {
           localStorage.setItem('access_token', response.token);
@@ -59,6 +70,7 @@ export class LoginPage {
           this.restProvider.GetAppointmentsForUser().subscribe(
             response => {
               this.appointmentProvider.setAppointments(response);
+              loading.dismiss();
               this.navCtrl.setRoot(HomePage);
               this.navCtrl.popToRoot();
             }, error => {
@@ -66,6 +78,7 @@ export class LoginPage {
             }
           )
         }, error => {
+          console.log(error);
           let alert = this.alertCtrl.create({
             title: 'E-Mail oder Passwort falsch',
             message: 'Bitte überprüfen Sie Ihre Eingaben.',
@@ -74,6 +87,7 @@ export class LoginPage {
                 text: 'Ok',
                 role: 'cancel',
                 handler: () => {
+                  loading.dismiss();
                   console.log('Cancel clicked');
                 }
               }
@@ -83,38 +97,6 @@ export class LoginPage {
           console.log("Eingaben sind ungültig.");
         }
       )
-          // .pipe(switchMap((response) => {
-          //   localStorage.setItem('access_token', response.token);
-          //   localStorage.setItem('user_id', response.id.toString());
-          //   return this.restProvider.GetAppointmentsForUser();
-          // }), catchError(error => {
-          //   console.log(error);
-          //     let alert = this.alertCtrl.create({
-          //       title: 'E-Mail oder Passwort falsch',
-          //       message: 'Bitte überprüfen Sie Ihre Eingaben.',
-          //       buttons: [
-          //         {
-          //           text: 'Ok',
-          //           role: 'cancel',
-          //           handler: () => {
-          //             console.log('Cancel clicked');
-          //           }
-          //         }
-          //       ]
-          //     });
-          //     alert.present();
-          //     console.log("Eingaben sind ungültig.");
-          //     return of([]);
-          // })).subscribe((result) => {
-          //   debugger;
-          //   if(result.length != 0){
-          //     this.appointmentProvider.setAppointments(result);
-          //     this.navCtrl.setRoot(HomePage);
-          //     this.navCtrl.popToRoot();
-          //   }
-          //   }, (error) => {
-          //     console.log(error);
-          //   });
     }
     else {
       let alert = this.alertCtrl.create({

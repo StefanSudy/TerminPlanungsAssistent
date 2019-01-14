@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Keyboard } from "@ionic-native/keyboard";
 
 import { HomePage } from '../pages/home/home';
 import { ChecklistPage } from '../pages/checklist/checklist';
@@ -19,7 +20,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public keyboard: Keyboard) {
     this.initializeApp();
 
     this.pages = [
@@ -34,6 +35,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      this.keyboard.disableScroll(true);
       this.splashScreen.hide();
     });
   }

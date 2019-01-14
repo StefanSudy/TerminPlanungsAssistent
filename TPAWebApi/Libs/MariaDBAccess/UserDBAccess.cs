@@ -106,7 +106,7 @@ namespace MariaDBAccess
 
             var user = GetByMail(userMail);
 
-            if (user == null)
+            if (user == null || !user.Active)
                 return null;
 
             return !VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt) ? null : user;

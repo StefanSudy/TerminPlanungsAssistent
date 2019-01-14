@@ -32,6 +32,7 @@ import { SettingsPageModule } from '../pages/settings/settings.module';
 import { RegisterPageModule } from '../pages/register/register.module';
 import { NewItemPageModule } from '../pages/new-item/new-item.module';
 import { HomePageModule } from '../pages/home/home.module';
+import { Keyboard } from '@ionic-native/keyboard';
 
 registerLocaleData(localeDEAT);
 //Sprache Kalender Ende
@@ -79,6 +80,7 @@ registerLocaleData(localeDEAT);
   ],
   providers: [
     StatusBar,
+    Keyboard,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     APIService,

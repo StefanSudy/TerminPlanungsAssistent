@@ -22,7 +22,7 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let item of currentItems" (click)="expandItem(item)">
-      <h1 style="font-size: 30px">{{item.item.entryName}}</h1>
+      <h1 style="font-size: 30px; text-overflow: ellipsis; overflow: hidden">{{item.item.entryName}}</h1>
       <button ion-button block style="width: 30%; height: 50px" (click)="goToItemView(item)" item-right>Details</button>
       <expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
           <p>{{item.item.dateDue | date: 'd/M/yy, HH:mm' }}</p>

@@ -2,8 +2,8 @@
   <ion-navbar>
    <ion-grid>
       <ion-row>
-        <ion-col>
-            <ion-title>{{currentItem.entryName}}</ion-title>
+        <ion-col style="overflow: hidden;">
+            <ion-title class="ellipsis">{{currentItem.entryName}}</ion-title>
         </ion-col>
         <ion-col>
           <div class="titleicon">
@@ -18,7 +18,15 @@
 <ion-content padding>
   <div class="viewDiv">
     <ion-grid>
-      <ion-row>
+      <ion-row class="dividerRow">
+        <ion-col>
+          <h3>Name</h3>
+        </ion-col>
+        <ion-col col-8>
+          <h3 class="inputValue">{{currentItem.entryName}}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row style="padding-block-start: 15px">
         <ion-col>
           <h3>Datum</h3>
         </ion-col>
@@ -31,7 +39,7 @@
           <h3>Dauer</h3>
         </ion-col>
         <ion-col col-8>
-          <h3 class="inputValue">{{currentItem.duration | date: 'HH:mm' }}</h3>
+          <h3 class="inputValue">{{currentItem.duration}} Minuten</h3>
         </ion-col>
       </ion-row>
       <ion-row style="padding-block-start: 15px;">

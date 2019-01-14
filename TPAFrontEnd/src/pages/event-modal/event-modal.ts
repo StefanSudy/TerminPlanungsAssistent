@@ -28,10 +28,11 @@ export class EventModalPage {
     this.newItem.userID = +localStorage.getItem('user_id');
     this.restService.PostAppointment(this.newItem).subscribe(
       (createdItem) => {
+        console.log("item ID: " + createdItem.id)
         this.newItem = createdItem;
+        this.viewCtrl.dismiss(this.newItem);
       }
     );
-    this.viewCtrl.dismiss(this.newItem);
   }
  
 }
