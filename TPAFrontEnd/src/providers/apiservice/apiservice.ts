@@ -50,10 +50,6 @@ export class APIService {
     .pipe(map((response: User) => {
       return new User(response);
     }));
-    // .map(response => {
-    //   return new User(response);
-    // })
-    // .catch((error: any) => Observable.throw(this.errorHandler(error)));;
   }
   public PostUser(user: User)
   {
@@ -61,10 +57,6 @@ export class APIService {
     .pipe(map(response => {
       return new User(response);
     }));
-    // .map(response => {
-    //   return new User(response);
-    // })
-    // .catch((error: any) => Observable.throw(this.errorHandler(error)));
   }
 
   public PutUser(user: User)
