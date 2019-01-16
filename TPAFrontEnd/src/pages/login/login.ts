@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, MenuController, Loading, LoadingController} from 'ionic-angular';
+import { NavController, AlertController, MenuController, LoadingController} from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../home/home';
 import { APIService } from '../../providers/apiservice/apiservice';
@@ -39,6 +39,9 @@ export class LoginPage {
             {
               text: 'Abbrechen',
               role: 'cancel',
+              handler: () => {
+                loading.dismiss();
+              }
             },
             {
             text: 'Ok',
