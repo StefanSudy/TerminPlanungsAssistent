@@ -19,6 +19,12 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)" style="background-color: transparent">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="crescent">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-row>
       <ion-col>

@@ -5,6 +5,7 @@ import { CalendarPage } from '../calendar/calendar';
 import { ViewItemPage } from '../view-item/view-item';
 import { NewItemPage } from '../new-item/new-item';
 import { AppointmentProvider } from '../../providers/appointmentprovider/appointmentprovider';
+import { APIService } from '../../providers/apiservice/apiservice';
 
 @Component({
   selector: 'page-home',
@@ -12,7 +13,7 @@ import { AppointmentProvider } from '../../providers/appointmentprovider/appoint
 })
 export class HomePage {
   public currentItems: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private appointmentProvider: AppointmentProvider, public menu: MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private appointmentProvider: AppointmentProvider, public menu: MenuController, private restProvider: APIService) {
     this.menu.enable(true);
   }
 
@@ -36,5 +37,14 @@ export class HomePage {
   
   ionViewWillEnter() {
     this.currentItems = this.appointmentProvider.getAppointments()
+  }
+  doRefresh(refresher) {
+    this.restProvider.GetAppointmentsForUser().subscribe(response => {
+      this.currentItems = response;
+      refresher.complete();
+    }, error => {
+      console.log(error);
+      refresher.complete();
+    })
   }
 }

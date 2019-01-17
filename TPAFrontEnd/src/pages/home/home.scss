@@ -39,3 +39,17 @@ ion-content{
 .item-md, .item-ios {
     background-color: transparent;
 }
+
+.has-refresher{
+    color: white;
+    background-color: transparent;
+}
+.has-refresher > .scroll-content {
+    border-top: none;
+}
+.refresher-pulling-icon{
+    color: white;
+}
+.refresher-refreshing .spinner-crescent circle {
+    stroke: white;
+}
