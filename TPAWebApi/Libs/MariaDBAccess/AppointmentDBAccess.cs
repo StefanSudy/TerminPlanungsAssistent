@@ -27,7 +27,8 @@ namespace MariaDBAccess
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var appointment = Get(id);
-            _context.Appointment.Remove(appointment);
+            appointment.Status = false;
+            _context.Appointment.Update(appointment);
         }
 
         public Appointment Get(int id)

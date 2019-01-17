@@ -27,17 +27,6 @@ namespace TPAWebApi.Controllers
             _mapper = mapper;
         }
 
-        //ToDO: Evaluate if GetAppointmentById is required
-        // GET api/values/5
-        /*[Produces(typeof(Appointment))]
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
-        {
-            if (id <= 0) BadRequest(nameof(id));
-            var appointment = _unitOfWork.Appointments.Get(id);
-            return Ok(appointment);
-        }*/
-
         [Produces(typeof(AppointmentDto[]))]
         [HttpGet("{userId}")]
         public IActionResult GetAppointments(int userId)
@@ -49,8 +38,9 @@ namespace TPAWebApi.Controllers
 
             var appointments = _unitOfWork
                                    .Appointments
-                                   .Find(x => x.UserId == userId)
+                                   .Find(x => x.UserId == userId && x.Status)
                                ?? throw new ArgumentNullException(nameof(userId));
+
             return Ok(appointments.ToArray());
         }
 

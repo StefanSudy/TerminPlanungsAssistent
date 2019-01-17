@@ -46,6 +46,9 @@ namespace TPAWebApi.Controllers
 
             var user = _unitOfWork.Users.Get(id);
 
+            if (!user.Active)
+                return BadRequest();
+
             var _user = new UserDto
             {
                 Id = user.Id,

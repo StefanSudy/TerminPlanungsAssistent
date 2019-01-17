@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { APIService } from '../../providers/apiservice/apiservice';
 import { User } from '../../models/user';
+import { LoginPage } from '../login/login';
 
 
 @IonicPage()
@@ -109,5 +110,63 @@ export class SettingsPage {
       return true;
     }
     return false;
+  }
+  deleteAccount() {
+    let alert = this.alertCtrl.create({
+      title: 'Sind sie sicher?',
+      message: 'Ihr Konto wird unwiderruflich gelöscht.',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+        },
+        {
+          text: 'Löschen',
+          handler: () => {
+            let loader = this.loadingCtrl.create({
+              spinner: 'crescent',
+              content: 'Wird gespeichert...'
+            })
+            loader.present();
+            this.restService.DeleteUser().subscribe(
+              () =>
+              {
+                let alert = this.alertCtrl.create({
+                  title: 'Erfolg',
+                  message: 'Ihr User wurde gelöscht. Sie werden zum Login weitergeleitet',
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      role: 'cancel',
+                      handler: () => {
+                        localStorage.clear();
+                        this.navCtrl.setRoot(LoginPage);
+                        this.navCtrl.popToRoot();
+                      }
+                    }
+                  ]
+                });
+                alert.present();
+              }, error => {
+                console.log(error);
+                let alert = this.alertCtrl.create({
+                  title: 'Fehler',
+                  message: 'Ihr User konnte nicht geloschen werden.',
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      role: 'cancel'
+                    }
+                  ]
+                });
+                alert.present();
+              }
+            );
+            loader.dismiss();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

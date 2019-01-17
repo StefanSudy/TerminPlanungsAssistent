@@ -42,7 +42,8 @@ namespace MariaDBAccess
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var user = Get(id);
-            _context.User.Remove(user);
+            user.Active = false;
+            _context.User.Update(user);
         }
 
         public User Get(int id)

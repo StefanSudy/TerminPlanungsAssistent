@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class APIService {
-  baseUrl:string = "https://192.168.1.206:443/api";
+  baseUrl:string = "https://localhost:5001/api";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -62,6 +62,12 @@ export class APIService {
   public PutUser(user: User)
   {
     return this.httpClient.put(this.baseUrl + '/user/' + localStorage.getItem('user_id'), user, {
+      headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
+    });
+  }
+
+  public DeleteUser() {
+    return this.httpClient.delete(this.baseUrl + '/user/' + localStorage.getItem('user_id'), { 
       headers: new HttpHeaders("Authorization: Bearer " + localStorage.getItem('access_token'))
     });
   }
