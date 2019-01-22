@@ -45,7 +45,7 @@
       <h3 style="color: white; font-size: 20px">Ausstehendes</h3>
     </ion-card-header>
     <ion-list>
-        <button ion-item *ngFor="let item of currentItems" (click)="itemTapped(item)">
+        <button ion-item *ngFor="let item of currentItems | slice:0:4" (click)="itemTapped(item)">
             {{item.entryName}}
           </button>
     </ion-list>
